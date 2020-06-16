@@ -4,7 +4,6 @@
 // Time  : 22:17
 
 import 'dart:async';
-import 'package:flutter/foundation.dart';
 import 'i_common_interface.dart';
 
 ///
@@ -28,18 +27,34 @@ class INetConfig {
 abstract class IHttp {
   INetConfig get config;
 
-  @protected
   Future<dynamic> handleRequest(String type, String tailUrl,
       {IDto dto, Map<String, dynamic> queryParameters});
 
-  /// [dynamic] 表示的是原始json中的data部分
-  Future<dynamic> post(String tailUrl, IDto dto) async =>
-      await (handleRequest('POST', tailUrl, dto: dto));
-
-  /// get请求可以不加参数,因此dto可选
+  /// get请求可以不加参数,因此[paramDto]可选
   Future<dynamic> get(String tailUrl,
-          {IDto dto, Map<String, dynamic> queryParameters}) async =>
+          {IDto paramDto, Map<String, dynamic> queryParameters}) async =>
       await (handleRequest('GET', tailUrl, queryParameters: queryParameters));
+
+  /// [dynamic] 表示的是原始json中的data部分
+  Future<dynamic> post(String tailUrl, IDto dataDto) async =>
+      await (handleRequest('POST', tailUrl, dto: dataDto));
+
+  Future<dynamic> put(String tailUrl,
+          {IDto dto, Map<String, dynamic> queryParameters}) async =>
+      await (handleRequest('PUT', tailUrl, queryParameters: queryParameters));
+
+  Future<dynamic> delete(String tailUrl,
+          {IDto dto, Map<String, dynamic> queryParameters}) async =>
+      await (handleRequest('DELETE', tailUrl,
+          queryParameters: queryParameters));
+
+  Future<dynamic> head(String tailUrl,
+          {IDto dto, Map<String, dynamic> queryParameters}) async =>
+      await (handleRequest('HEAD', tailUrl, queryParameters: queryParameters));
+
+  Future<dynamic> patch(String tailUrl,
+          {IDto dto, Map<String, dynamic> queryParameters}) async =>
+      await (handleRequest('PATCH', tailUrl, queryParameters: queryParameters));
 }
 
 ///
@@ -47,20 +62,29 @@ abstract class IHttp {
 abstract class ISocket {
   INetConfig get config;
 
-  /// WebSocket 请求
-  Future<IWsController> webSocket(String tailUrl);
+  // WebSocket 请求
+  Future<ISocketController> webSocket(String tailUrl);
 }
 
-/// WebSocket控制器
-abstract class IWsController<T> {
+///
+/// Socket控制器
+abstract class ISocketController<T> {
   Stream<T> get stream;
 
-  void addToWs(Map<String, dynamic> data);
+  void add(Map<String, dynamic> data);
 
   // 使用RxDart可以将close放到stream.close()方法中
   Future<void> close({int closeCode, String closeReason});
 }
 
+@Deprecated('请改用[ISocketController]')
+abstract class IWsController<T> extends ISocketController<T> {
+  void add(Map<String, dynamic> data);
+  @Deprecated('请改用[add()]')
+  void addToWs(Map<String, dynamic> data) => add(data);
+}
+
+///
 /// WebSocket断开代码
 abstract class WsCloseCode {
   /// The purpose for which the connection was established has been fulfilled.

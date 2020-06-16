@@ -1,6 +1,6 @@
 name: get_arch_core
 description: flutter architecture core package
-version: 0.0.2
+version: 0.0.3
 repository: https://github.com/Hu-Wentao/get_arch_core
 
 environment:
@@ -14,7 +14,6 @@ dependencies:
   injectable: ^0.4.0+1
   rxdart: ^0.24.1
   dartz: ^0.9.1
-  freezed: ^0.11.0
   freezed_annotation: ^0.11.0
   equatable: ^1.2.0
   verify: ^1.1.1

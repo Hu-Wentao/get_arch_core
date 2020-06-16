@@ -1,3 +1,8 @@
+## [0.0.3] - 2020/6/16
+
+* add(IHttp): put(),delete(),head(),patch()
+* rename(IWsController): ISocketController
+
 ## [0.0.2] - 2020/6/15
 
 * add export package
