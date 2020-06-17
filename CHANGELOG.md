@@ -1,3 +1,7 @@
+## [0.1.1] - 2020/6/17
+
+* add New ability to retrieve EnvConfig using DI
+
 ## [0.1.0] - 2020/6/17
 
 * add GetArchApplication.run()
