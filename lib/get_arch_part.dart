@@ -8,7 +8,7 @@ library get_arch_part;
 export 'package:get_it/get_it.dart';
 export 'package:injectable/injectable.dart';
 export 'package:rxdart/rxdart.dart';
-export 'package:dartz/dartz.dart';
+export 'package:dartz/dartz.dart' hide State;
 export 'package:freezed_annotation/freezed_annotation.dart';
 export 'package:equatable/equatable.dart';
 export 'package:verify/verify.dart';

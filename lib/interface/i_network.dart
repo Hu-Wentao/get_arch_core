@@ -4,6 +4,7 @@
 // Time  : 22:17
 
 import 'dart:async';
+import 'dart:convert';
 import 'i_common_interface.dart';
 
 ///
@@ -71,16 +72,21 @@ abstract class ISocket {
 abstract class ISocketController<T> {
   Stream<T> get stream;
 
-  void add(Map<String, dynamic> data);
+  void addJson(Map<String, dynamic> data) => this.addRaw(jsonEncode(data));
+
+  void addRaw(String data);
 
   // 使用RxDart可以将close放到stream.close()方法中
   Future<void> close({int closeCode, String closeReason});
+
+  @Deprecated('请使用 addJson() 将在1.0.0后移除')
+  void add(Map<String, dynamic> data);
 }
 
-@Deprecated('请改用[ISocketController]')
+@Deprecated('请改用[ISocketController, 将在1.0.0后移除]')
 abstract class IWsController<T> extends ISocketController<T> {
   void add(Map<String, dynamic> data);
-  @Deprecated('请改用[add()]')
+  @Deprecated('请改用[add()], 将在1.0.0后移除')
   void addToWs(Map<String, dynamic> data) => add(data);
 }
 
