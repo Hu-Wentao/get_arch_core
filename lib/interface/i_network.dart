@@ -69,22 +69,25 @@ abstract class ISocket {
 
 ///
 /// Socket控制器
-abstract class ISocketController<T> {
-  Stream<T> get stream;
-
-  void addJson(Map<String, dynamic> data) => this.addRaw(jsonEncode(data));
+abstract class ISocketController {
+  Stream get stream;
 
   void addRaw(String data);
+
+  Stream<Map<String, dynamic>> get decodedStream =>
+      stream.map((data) => jsonDecode(data));
+
+  void addJson(Map<String, dynamic> data) => this.addRaw(jsonEncode(data));
 
   // 使用RxDart可以将close放到stream.close()方法中
   Future<void> close({int closeCode, String closeReason});
 
   @Deprecated('请使用 addJson() 将在1.0.0后移除')
-  void add(Map<String, dynamic> data);
+  void add(Map<String, dynamic> data) => addJson(data);
 }
 
 @Deprecated('请改用[ISocketController, 将在1.0.0后移除]')
-abstract class IWsController<T> extends ISocketController<T> {
+abstract class IWsController<T> extends ISocketController {
   void add(Map<String, dynamic> data);
   @Deprecated('请改用[add()], 将在1.0.0后移除')
   void addToWs(Map<String, dynamic> data) => add(data);
