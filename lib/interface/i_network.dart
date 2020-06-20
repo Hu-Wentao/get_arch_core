@@ -5,22 +5,39 @@
 
 import 'dart:async';
 import 'dart:convert';
+import 'package:equatable/equatable.dart';
+
 import 'i_common_interface.dart';
 
 ///
 /// 网络配置
-class INetConfig {
+class INetConfig extends Equatable {
   final String scheme; // http,https,ws,wss
   final String authority; // www.google.com:80
   String get baseUrl => '$scheme://$authority';
 
-  final Map<String, String> staticHeaders;
+  final Map<String, String> staticHeaders; // 固定都请求头
 
-  INetConfig({
+  INetConfig(
     this.scheme,
     this.authority,
     this.staticHeaders,
-  }); // 固定都请求头
+  )   : assert(scheme != null),
+        assert(authority != null);
+
+  INetConfig.named({
+    String scheme,
+    String authority,
+    Map<String, dynamic> staticHeaders,
+  }) : this(scheme, authority, staticHeaders);
+
+  @override
+  List<Object> get props => [
+        scheme,
+        authority,
+        staticHeaders,
+      ]; //
+  final bool stringify = true;
 }
 
 ///
