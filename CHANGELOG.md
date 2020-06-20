@@ -1,3 +1,11 @@
+## [0.2.0] - 2020/6/18
+* GetArchApplication add printPackageConfigInfo()
+* ProfileModule rename to ProfileGetArchCore
+* ISocketController remove: generics,add decodedStream
+* IDialogHelper  err() add dynamic tag param
+* INetConfig extends Equatable
+
+
 ## [0.1.2] - 2020/6/17
 
 * refactor(ISocketController): add new data method,addJson(),addRaw()
