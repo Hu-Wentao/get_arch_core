@@ -6,7 +6,7 @@
 /// 对话框
 abstract class IDialogHelper {
   /// 错误处理
-  err(dynamic failure);
+  err(dynamic failure,[dynamic tag]);
 
   /// toast
   text(String s);
