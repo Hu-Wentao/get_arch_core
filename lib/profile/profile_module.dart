@@ -6,7 +6,7 @@
 part of 'get_arch_application.dart';
 
 @module
-abstract class ProfileModule {
+abstract class ProfileGetArchCore {
   @preResolve
   EnvConfig get envConfig => _config;
 }

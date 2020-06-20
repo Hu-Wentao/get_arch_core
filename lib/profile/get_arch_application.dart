@@ -16,14 +16,19 @@ part 'profile_module.dart';
 /// ```dart
 /// Future<void> main() async {
 ///   WidgetsFlutterBinding.ensureInitialized();
-///   await GetArchApplication.run(config: EnvConfig(...), packages: [...]);
+///   await GetArchApplication.run(EnvConfig(...), packages: [...]);
 ///   runApp(MyApp());
 /// }
 /// ```
 class GetArchApplication {
-  static Future run(EnvConfig config, {List<IGetArchPackage> packages}) async {
-    await GetArchCorePackage().init(config);
-    if (packages != null) for (final pkg in packages) await pkg.init(config);
+  static Future run(
+    EnvConfig config, {
+    List<IGetArchPackage> packages,
+    bool printConfig,
+  }) async {
+    await GetArchCorePackage().init(config, printConfig);
+    if (packages != null)
+      for (final pkg in packages) await pkg.init(config, printConfig);
   }
 }
 
@@ -34,11 +39,18 @@ abstract class IGetArchPackage {
 
   IGetArchPackage({this.onlyInitDI: false}) : assert(onlyInitDI != null);
 
-  Future<void> init(EnvConfig config) async {
+  Future<void> init(EnvConfig config, bool printConfig) async {
+    if (printConfig ?? true) _printConf(config);
     if (!onlyInitDI) await initPackage(config);
     await initPackageDI(config);
   }
 
+  void _printConf(EnvConfig config) => print('''
+    ╠══╣ [${this.runtimeType}] Config Info ╠══════
+      ${printPackageConfigInfo(config)?.splitMapJoin('\n', onMatch: (_) => '\n      ') ?? '${this.runtimeType} Loaded'}
+    ''');
+
+  String printPackageConfigInfo(EnvConfig config);
   // 初始化包
   Future<void> initPackage(EnvConfig config);
   // 初始化包依赖注入
@@ -57,8 +69,16 @@ class GetArchCorePackage extends IGetArchPackage {
     _config = config;
     await initDI(config);
   }
+
+  @override
+  String printPackageConfigInfo(EnvConfig config) => '''
+App Name    : ${config.appName}
+Lib Version : ${config.libVersion}
+Pack Time   : ${config.packTime}
+Runtime Env : ${config.envSign}
+  ''';
 }
 
 @injectableInit
 Future<void> initDI(EnvConfig config) async =>
-    await $initGetIt(GetIt.instance, environment: config.envSign);
+    $initGetIt(GetIt.instance, environment: config.envSign);

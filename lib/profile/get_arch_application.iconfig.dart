@@ -13,4 +13,4 @@ void $initGetIt(GetIt g, {String environment}) {
   g.registerFactory<EnvConfig>(() => profileModule.envConfig);
 }
 
-class _$ProfileModule extends ProfileModule {}
+class _$ProfileModule extends ProfileGetArchCore {}
