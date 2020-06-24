@@ -3,7 +3,8 @@
 // Date  : 2020/1/17
 // Time  : 19:26
 import 'package:dartz/dartz.dart';
-import 'package:get_arch_core/domain/error/failures.dart';
+
+import '../get_arch_core.dart';
 
 ///
 /// 抽象用例

@@ -2,12 +2,8 @@
 // Email : hu.wentao@outlook.com
 // Date  : 2020/6/13
 // Time  : 21:20
-///
-/// 对话框
-abstract class IDialogHelper {
-  /// 错误处理
-  err(dynamic failure,[dynamic tag]);
+import 'package:get_arch_core/interface/i_dialog.dart';
 
-  /// toast
-  text(String s);
-}
+///
+/// 对话框 后期使用IDialog取代本类
+abstract class IDialogHelper extends IDialog {}

@@ -25,8 +25,8 @@ abstract class ValueObject<T> implements IVerifiable {
 
   Either<ValueFailure<dynamic>, Unit> get failureOrUnit {
     return value.fold(
-          (l) => left(l),
-          (r) => right(unit),
+      (l) => left(l),
+      (r) => right(unit),
     );
   }
 

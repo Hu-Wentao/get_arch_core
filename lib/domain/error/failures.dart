@@ -11,7 +11,6 @@ part 'failures.freezed.dart';
 ///
 /// 常用的Failure
 
-
 abstract class Failure extends Equatable {
   final String reportFailureType;
   final String msg;

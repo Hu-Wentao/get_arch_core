@@ -1,3 +1,7 @@
+## [0.2.1] - 2020/6/24
+* add(i_dialog): rename from IDialogHelper
+* format all files with flutter format
+
 ## [0.2.0] - 2020/6/18
 * GetArchApplication add printPackageConfigInfo()
 * ProfileModule rename to ProfileGetArchCore
