@@ -1,6 +1,6 @@
 name: get_arch_core
-description: flutter architecture core package
-version: 0.2.1
+description: flutter architecture package, Inspired by Explicit Architecture, Clean Architectures, DDD,
+version: 0.2.2
 repository: https://github.com/Hu-Wentao/get_arch_core
 
 environment:

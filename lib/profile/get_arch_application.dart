@@ -24,7 +24,7 @@ class GetArchApplication {
   static Future run(
     EnvConfig config, {
     List<IGetArchPackage> packages,
-    bool printConfig,
+    bool printConfig: true,
   }) async {
     await GetArchCorePackage().init(config, printConfig);
     if (packages != null)

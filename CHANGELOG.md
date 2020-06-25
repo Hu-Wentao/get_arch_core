@@ -1,3 +1,7 @@
+## [0.2.2] - 2020/6/25
+* refactor(extension.dart): rename hex to hexVal
+* add(get_arch_application.dart): printConfig field add default value "true"
+
 ## [0.2.1] - 2020/6/24
 * add(i_dialog): rename from IDialogHelper
 * format all files with flutter format
