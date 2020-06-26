@@ -22,27 +22,28 @@ part 'profile_module.dart';
 /// ```
 class GetArchApplication {
   static Future run(
-    EnvConfig config, {
+    EnvConfig globalConfig, {
     List<IGetArchPackage> packages,
     bool printConfig: true,
   }) async {
-    await GetArchCorePackage().init(config, printConfig);
+    await GetArchCorePackage().init(globalConfig, printConfig);
     if (packages != null)
-      for (final pkg in packages) await pkg.init(config, printConfig);
+      for (final pkg in packages) await pkg.init(globalConfig, printConfig);
   }
 }
 
 ///
 /// 所有的GetArch包都必须实现本类
 abstract class IGetArchPackage {
-  final bool onlyInitDI;
+  final EnvConfig pkgConfig;
 
-  IGetArchPackage({this.onlyInitDI: false}) : assert(onlyInitDI != null);
+  IGetArchPackage(this.pkgConfig);
 
   Future<void> init(EnvConfig config, bool printConfig) async {
-    if (printConfig ?? true) _printConf(config);
-    if (!onlyInitDI) await initPackage(config);
-    await initPackageDI(config);
+    final cfg = pkgConfig ?? config;
+    if (printConfig ?? true) _printConf(cfg);
+    await initPackage(cfg);
+    await initPackageDI(cfg);
   }
 
   void _printConf(EnvConfig config) => print('''
@@ -61,6 +62,9 @@ abstract class IGetArchPackage {
 EnvConfig _config;
 
 class GetArchCorePackage extends IGetArchPackage {
+  // GetArchCore只接受全局EnvConfig
+  GetArchCorePackage() : super(null);
+
   @override
   Future<void> initPackage(EnvConfig config) => null;
 
@@ -81,4 +85,4 @@ Runtime Env : ${config.envSign}
 
 @injectableInit
 Future<void> initDI(EnvConfig config) async =>
-    $initGetIt(GetIt.instance, environment: config.envSign);
+    $initGetIt(GetIt.instance, environment: config.envSign.toString());

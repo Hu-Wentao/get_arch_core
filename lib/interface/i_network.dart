@@ -16,7 +16,7 @@ class INetConfig extends Equatable {
   final String authority; // www.google.com:80
   String get baseUrl => '$scheme://$authority';
 
-  final Map<String, String> staticHeaders; // 固定都请求头
+  final Map<String, String> staticHeaders; // 固定的请求头
 
   INetConfig(
     this.scheme,

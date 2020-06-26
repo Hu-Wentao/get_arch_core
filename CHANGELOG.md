@@ -1,6 +1,9 @@
-## [0.2.2] - 2020/6/25
+## [0.3.0] - 2020/6/25
+* feat: GetArch package can profile package EnvConfig
+* add(EnvConfig): new Constructor "EnvConfig.sign()"for experience developer
+* refactor(EnvConfig): change String envSign to EnvSign envSign
 * refactor(extension.dart): rename hex to hexVal
-* add(get_arch_application.dart): printConfig field add default value "true"
+* add(get_arch_application.dart): printConfig field add value "true"
 
 ## [0.2.1] - 2020/6/24
 * add(i_dialog): rename from IDialogHelper
