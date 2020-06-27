@@ -1,4 +1,6 @@
 ## [0.3.0] - 2020/6/25
+* feat: move dartz.Either to get_arch_core.dart
+* feat: GetArchApplication.run() can catch exception now
 * feat: GetArch package can profile package EnvConfig
 * add(EnvConfig): new Constructor "EnvConfig.sign()"for experience developer
 * refactor(EnvConfig): change String envSign to EnvSign envSign

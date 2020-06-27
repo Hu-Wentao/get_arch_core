@@ -8,6 +8,7 @@ export 'domain/common_interface.dart';
 export 'domain/extension.dart';
 export 'domain/value_objects.dart';
 export 'domain/value_validators.dart';
+export 'package:dartz/dartz.dart' show Either;
 
 export 'interface/i_common_interface.dart';
 export 'interface/i_dialog_helper.dart';

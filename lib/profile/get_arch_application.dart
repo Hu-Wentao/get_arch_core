@@ -26,21 +26,25 @@ class GetArchApplication {
     List<IGetArchPackage> packages,
     bool printConfig: true,
   }) async {
-    await GetArchCorePackage().init(globalConfig, printConfig);
-    if (packages != null)
-      for (final pkg in packages) await pkg.init(globalConfig, printConfig);
+    try {
+      await GetArchCorePackage().init(globalConfig, printConfig);
+      if (packages != null)
+        for (final pkg in packages) await pkg.init(globalConfig, printConfig);
+    } catch (e, s) {
+      print('GetArchApplication.run ## 初始化出错! Exception:[\n$e\n]\nStackTrace[\n$s\n]');
+    }
   }
 }
 
 ///
 /// 所有的GetArch包都必须实现本类
 abstract class IGetArchPackage {
-  final EnvConfig pkgConfig;
+  final EnvConfig pkgEnv;
 
-  IGetArchPackage(this.pkgConfig);
+  IGetArchPackage(this.pkgEnv);
 
-  Future<void> init(EnvConfig config, bool printConfig) async {
-    final cfg = pkgConfig ?? config;
+  Future<void> init(EnvConfig env, bool printConfig) async {
+    final cfg = pkgEnv ?? env;
     if (printConfig ?? true) _printConf(cfg);
     await initPackage(cfg);
     await initPackageDI(cfg);
@@ -66,13 +70,10 @@ class GetArchCorePackage extends IGetArchPackage {
   GetArchCorePackage() : super(null);
 
   @override
-  Future<void> initPackage(EnvConfig config) => null;
+  Future<void> initPackage(EnvConfig config) async => _config = config;
 
   @override
-  Future<void> initPackageDI(EnvConfig config) async {
-    _config = config;
-    await initDI(config);
-  }
+  Future<void> initPackageDI(EnvConfig config) async => await initDI(config);
 
   @override
   String printPackageConfigInfo(EnvConfig config) => '''
