@@ -6,10 +6,6 @@
 import 'package:get_arch_core/domain/env_config.dart';
 import 'package:get_arch_core/get_arch_part.dart';
 
-import 'get_arch_application.iconfig.dart';
-
-part 'profile_module.dart';
-
 /// App运行
 /// 在main()中,必须先执行 WidgetsFlutterBinding.ensureInitialized();
 ///
@@ -31,7 +27,8 @@ class GetArchApplication {
       if (packages != null)
         for (final pkg in packages) await pkg.init(globalConfig, printConfig);
     } catch (e, s) {
-      print('GetArchApplication.run ## 初始化出错! Exception:[\n$e\n]\nStackTrace[\n$s\n]');
+      print(
+          'GetArchApplication.run ## 初始化出错! Exception:[\n$e\n]\nStackTrace[\n$s\n]');
     }
   }
 }
@@ -60,20 +57,31 @@ abstract class IGetArchPackage {
   Future<void> initPackage(EnvConfig config);
   // 初始化包依赖注入
   Future<void> initPackageDI(EnvConfig config);
-}
 
-/// App 运行环境配置
-EnvConfig _config;
+  ///
+  /// 请在 'printPackageConfigInfo()'内部调用
+  /// ```dart
+  ///
+  /// @override
+  /// printPackageConfigInfo()=>'''
+  /// ${boolConfigFieldsFormatPrint('IXXXType',openIXXXType)}
+  /// ''';
+  ///
+  /// ```
+  String boolConfigFieldsFormatPrint(String absTypeName, bool open) =>
+      '  <$absTypeName>实现: 已${open ? '启用' : '禁用'}';
+}
 
 class GetArchCorePackage extends IGetArchPackage {
   // GetArchCore只接受全局EnvConfig
   GetArchCorePackage() : super(null);
 
   @override
-  Future<void> initPackage(EnvConfig config) async => _config = config;
+  Future<void> initPackage(EnvConfig config) => null;
 
   @override
-  Future<void> initPackageDI(EnvConfig config) async => await initDI(config);
+  Future<void> initPackageDI(EnvConfig config) async =>
+      GetIt.I.registerSingleton<EnvConfig>(config);
 
   @override
   String printPackageConfigInfo(EnvConfig config) => '''
@@ -84,6 +92,7 @@ Runtime Env : ${config.envSign}
   ''';
 }
 
-@injectableInit
-Future<void> initDI(EnvConfig config) async =>
-    $initGetIt(GetIt.instance, environment: config.envSign.toString());
+// 可以通过如下代码来自动生成注册代码
+//@injectableInit
+//Future<void> initDI(EnvConfig config) async =>
+//    $initGetIt(GetIt.instance, environment: config.envSign.toString());

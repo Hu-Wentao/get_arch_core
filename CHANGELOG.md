@@ -1,3 +1,6 @@
+## [0.3.1] - 2020/6/27
+* 
+
 ## [0.3.0] - 2020/6/25
 * feat: move dartz.Either to get_arch_core.dart
 * feat: GetArchApplication.run() can catch exception now
