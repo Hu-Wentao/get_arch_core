@@ -13,5 +13,8 @@ abstract class IDialog {
   err(dynamic failure, [dynamic tag]);
 
   /// toast
+  @Deprecated('please use toast')
   text(String s);
+  
+  toast(String s);
 }

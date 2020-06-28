@@ -15,5 +15,6 @@ export 'interface/i_dialog_helper.dart';
 export 'interface/i_dialog.dart';
 export 'interface/i_network.dart';
 export 'interface/i_storage.dart';
+export 'package:freezed_annotation/freezed_annotation.dart';
 
 export 'profile/get_arch_application.dart';
