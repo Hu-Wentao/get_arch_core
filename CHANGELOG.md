@@ -1,5 +1,9 @@
-## [0.3.1] - 2020/6/27
-* 
+## [0.4.0] - 2020/6/27
+* feat(IGetArchPackage): boolConfigFieldsFormatPrint(),help to get the EnvConfig describe String.
+* remove(get_arch_application.iconfig.dart): Other projects may import this "$initGetIt()" incorrectly
+* remove(IDialogHelper): use IDialog instead of IDialogHelper
+* feat: use IDialog.toast instead of IDialog.text
+* add(get_arch_core.dart): export freezed_annotation,
 
 ## [0.3.0] - 2020/6/25
 * feat: move dartz.Either to get_arch_core.dart

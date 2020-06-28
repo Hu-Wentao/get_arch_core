@@ -64,12 +64,19 @@ abstract class IGetArchPackage {
   ///
   /// @override
   /// printPackageConfigInfo()=>'''
-  /// ${boolConfigFieldsFormatPrint('IXXXType',openIXXXType)}
+  /// ${boolConfigFieldsFormatPrint({'IXXXType': openIXXXType,})}
   /// ''';
   ///
   /// ```
-  String boolConfigFieldsFormatPrint(String absTypeName, bool open) =>
-      '  <$absTypeName>实现: 已${open ? '启用' : '禁用'}';
+  String boolConfigFieldsFormatPrint(Map<String, bool> typeNameAndState) =>
+      typeNameAndState.entries
+          .fold<StringBuffer>(
+            StringBuffer(),
+            (pre, ele) => pre
+              ..write(
+                  '  <${ele.key}>实现: ${ele.value == null ? '参数异常!' : ele.value ? '启用' : '禁用'}\n'),
+          )
+          .toString();
 }
 
 class GetArchCorePackage extends IGetArchPackage {
