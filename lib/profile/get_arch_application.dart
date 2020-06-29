@@ -19,8 +19,8 @@ import 'package:get_arch_core/get_arch_part.dart';
 class GetArchApplication {
   static Future run(
     EnvConfig globalConfig, {
-    List<IGetArchPackage> packages,
     bool printConfig: true,
+    List<IGetArchPackage> packages,
   }) async {
     try {
       await GetArchCorePackage().init(globalConfig, printConfig);
@@ -47,36 +47,33 @@ abstract class IGetArchPackage {
     await initPackageDI(cfg);
   }
 
-  void _printConf(EnvConfig config) => print('''
-    ╠══╣ [${this.runtimeType}] Config Info ╠══════
-      ${printPackageConfigInfo(config)?.splitMapJoin('\n', onMatch: (_) => '\n      ') ?? '${this.runtimeType} Loaded'}
-    ''');
+  // 起止行4个空格,信息内容行6个空格
+  void _printConf(EnvConfig config) {
+    final start = '\t╦═══ [${this.runtimeType}] Config Info ══════\n';
+    final endLn = '\t╚═══ [${this.runtimeType}] Loaded ══════';
 
-  String printPackageConfigInfo(EnvConfig config);
+    StringBuffer bfA = printBoolStateWithRegTypeName?.entries?.fold<
+            StringBuffer>(
+        StringBuffer(),
+        (pre, kv) => pre
+          ..writeln(
+              '\t  <${kv.key}>实现: ${kv.value == null ? '参数异常! 请检查Package配置!' : kv.value ? '启用' : '禁用'}'));
+    StringBuffer bfB = printOtherStateWithEnvConfig(config)?.entries?.fold(
+        bfA ?? StringBuffer(),
+        (pre, kv) => pre..writeln('\t  ${kv.key} : ${kv.value}'));
+
+    print(start);
+    print(bfB ?? endLn);
+  }
+
+  // 打印bool类型的Package配置信息
+  Map<String, bool> get printBoolStateWithRegTypeName;
+  // 打印其他类型的Package配置信息
+  Map<String, String> printOtherStateWithEnvConfig(EnvConfig config);
   // 初始化包
   Future<void> initPackage(EnvConfig config);
   // 初始化包依赖注入
   Future<void> initPackageDI(EnvConfig config);
-
-  ///
-  /// 请在 'printPackageConfigInfo()'内部调用
-  /// ```dart
-  ///
-  /// @override
-  /// printPackageConfigInfo()=>'''
-  /// ${boolConfigFieldsFormatPrint({'IXXXType': openIXXXType,})}
-  /// ''';
-  ///
-  /// ```
-  String boolConfigFieldsFormatPrint(Map<String, bool> typeNameAndState) =>
-      typeNameAndState.entries
-          .fold<StringBuffer>(
-            StringBuffer(),
-            (pre, ele) => pre
-              ..write(
-                  '  <${ele.key}>实现: ${ele.value == null ? '参数异常!' : ele.value ? '启用' : '禁用'}\n'),
-          )
-          .toString();
 }
 
 class GetArchCorePackage extends IGetArchPackage {
@@ -91,15 +88,19 @@ class GetArchCorePackage extends IGetArchPackage {
       GetIt.I.registerSingleton<EnvConfig>(config);
 
   @override
-  String printPackageConfigInfo(EnvConfig config) => '''
-App Name    : ${config.appName}
-Lib Version : ${config.libVersion}
-Pack Time   : ${config.packTime}
-Runtime Env : ${config.envSign}
-  ''';
+  Map<String, String> printOtherStateWithEnvConfig(EnvConfig config) => {
+        'App Name   ': '${config?.appName}',
+        'Lib Version': '${config?.libVersion}',
+        'Pack Time  ': '${config?.packTime}',
+        'Runtime Env': '${config?.envSign}',
+      };
+
+  @override
+  Map<String, bool> get printBoolStateWithRegTypeName => null;
 }
 
 // 可以通过如下代码来自动生成注册代码
+// 这里不再使用自动注册, 是因为在其他项目导包时经常会误导入本文件中的$initGetIt
 //@injectableInit
 //Future<void> initDI(EnvConfig config) async =>
 //    $initGetIt(GetIt.instance, environment: config.envSign.toString());

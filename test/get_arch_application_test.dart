@@ -21,12 +21,4 @@ main() {
     expect(EnvSign.fromString('dev'), EnvSign.dev);
   });
 
-  test('boolConfigFieldsFormatPrint', () {
-    final s = GetArchCorePackage().boolConfigFieldsFormatPrint({
-      'IAaaPkg': true,
-      'IBbbSource': null,
-      'ICccRepo': false,
-    });
-    print(s);
-  });
 }
