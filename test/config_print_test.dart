@@ -7,9 +7,8 @@ import 'package:flutter_test/flutter_test.dart';
 import 'package:get_arch_core/domain/env_config.dart';
 import 'package:get_arch_core/get_arch_core.dart';
 
-class _TestPrintConfigPackage extends IGetArchPackage {
-  _TestPrintConfigPackage(this.printBoolStateWithRegTypeName,
-      {EnvConfig pkgEnv})
+class _TestConfigPackage extends IGetArchPackage {
+  _TestConfigPackage(this.printBoolStateWithRegTypeName, {EnvConfig pkgEnv})
       : super(pkgEnv);
 
   @override
@@ -33,7 +32,7 @@ main() {
   test('_print full', () {
     GetArchApplication.run(EnvConfig('测试打印效果', '0.0.1', null, EnvSign.dev),
         packages: [
-          _TestPrintConfigPackage({
+          _TestConfigPackage({
             'IAaaRepo': true,
             'IBbbSource': false,
             'ICccAPI': null,
@@ -44,14 +43,13 @@ main() {
   test('_print null pkg conf', () {
     GetArchApplication.run(EnvConfig('测试打印效果', '0.0.1', null, EnvSign.dev),
         packages: [
-          _TestPrintConfigPackage(null),
+          _TestConfigPackage(null),
         ]);
   });
 
   test('_print null all conf', () {
-    GetArchApplication.run(null,
-        packages: [
-          _TestPrintConfigPackage(null),
-        ]);
+    GetArchApplication.run(null, packages: [
+      _TestConfigPackage(null),
+    ]);
   });
 }

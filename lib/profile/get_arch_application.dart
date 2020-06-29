@@ -17,15 +17,27 @@ import 'package:get_arch_core/get_arch_part.dart';
 /// }
 /// ```
 class GetArchApplication {
+  static const logo = r'''
+       _____      _                       _     
+      / ____|    | |       /\            | |    
+     | |  __  ___| |_     /  \   _ __ ___| |__  
+     | | |_ |/ _ \ __|   / /\ \ | '__/ __| '_ \ 
+     | |__| |  __/ |_   / ____ \| | | (__| | | |
+      \_____|\___|\__| /_/    \_\_|  \___|_| |_|
+
+''';
+  static const endInfo = '\t╠╬══╗ All the configuration are loaded ╔══════';
   static Future run(
     EnvConfig globalConfig, {
     bool printConfig: true,
     List<IGetArchPackage> packages,
   }) async {
     try {
+      print(logo);
       await GetArchCorePackage().init(globalConfig, printConfig);
       if (packages != null)
         for (final pkg in packages) await pkg.init(globalConfig, printConfig);
+      print(endInfo);
     } catch (e, s) {
       print(
           'GetArchApplication.run ## 初始化出错! Exception:[\n$e\n]\nStackTrace[\n$s\n]');
@@ -49,21 +61,21 @@ abstract class IGetArchPackage {
 
   // 起止行4个空格,信息内容行6个空格
   void _printConf(EnvConfig config) {
-    final start = '\t╦═══ [${this.runtimeType}] Config Info ══════\n';
-    final endLn = '\t╚═══ [${this.runtimeType}] Loaded ══════';
+    final start = '\t╠╬══╝ [${this.runtimeType}] Config Info ╚══════\n';
+    final endLn = '\t╠═══╗ [${this.runtimeType}] Conf Loaded ╔══════';
 
-    StringBuffer bfA = printBoolStateWithRegTypeName?.entries?.fold<
+    StringBuffer bf = printBoolStateWithRegTypeName?.entries?.fold<
             StringBuffer>(
         StringBuffer(),
         (pre, kv) => pre
           ..writeln(
               '\t  <${kv.key}>实现: ${kv.value == null ? '参数异常! 请检查Package配置!' : kv.value ? '启用' : '禁用'}'));
-    StringBuffer bfB = printOtherStateWithEnvConfig(config)?.entries?.fold(
-        bfA ?? StringBuffer(),
+    bf = printOtherStateWithEnvConfig(config)?.entries?.fold(
+        bf ?? StringBuffer(),
         (pre, kv) => pre..writeln('\t  ${kv.key} : ${kv.value}'));
 
     print(start);
-    print(bfB ?? endLn);
+    print(bf ?? endLn);
   }
 
   // 打印bool类型的Package配置信息
