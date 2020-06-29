@@ -18,3 +18,5 @@ export 'interface/i_storage.dart';
 export 'package:freezed_annotation/freezed_annotation.dart';
 
 export 'profile/get_arch_application.dart';
+
+export 'package:injectable/injectable.dart';
