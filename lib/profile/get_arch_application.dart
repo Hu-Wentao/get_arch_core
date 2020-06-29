@@ -71,8 +71,9 @@ abstract class IGetArchPackage {
           ..writeln(
               '\t  <${kv.key}>实现: ${kv.value == null ? '参数异常! 请检查Package配置!' : kv.value ? '启用' : '禁用'}'));
     bf = printOtherStateWithEnvConfig(config)?.entries?.fold(
-        bf ?? StringBuffer(),
-        (pre, kv) => pre..writeln('\t  ${kv.key} : ${kv.value}'));
+            (bf ?? StringBuffer()),
+            (pre, kv) => pre..writeln('\t  ${kv.key} : ${kv.value}')) ??
+        bf;
 
     print(start);
     print(bf ?? endLn);
