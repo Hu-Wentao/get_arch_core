@@ -26,7 +26,7 @@ class GetArchApplication {
       \_____|\___|\__| /_/    \_\_|  \___|_| |_|
 
 ''';
-  static const _endInfo = '\t╠╬══╗ All the configuration are loaded ╔══════';
+  static const _endInfo = '\t╚╚═╗ All the configuration are loaded ╔══════';
   static Future run(
     EnvConfig globalConfig, {
     bool printConfig: true,
@@ -66,7 +66,7 @@ abstract class IGetArchPackage {
   // 起止行4个空格,信息内容行6个空格
   void _printConf(EnvConfig config) {
     final start = '\t╠╬══╝ [${this.runtimeType}] Config Info ╚══════\n';
-    final endLn = '\t╠═══╗ [${this.runtimeType}] Conf Loaded ╔══════';
+    final endLn = '\t╚╚══╗ [${this.runtimeType}] Conf Loaded ╔══════';
 
     StringBuffer bf = printBoolStateWithRegTypeName?.entries?.fold<
             StringBuffer>(

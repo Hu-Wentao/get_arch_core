@@ -20,3 +20,4 @@ export 'profile/get_arch_application.dart';
 
 export 'package:get_it/get_it.dart';
 export 'package:injectable/injectable.dart' hide test;
+export 'package:equatable/equatable.dart';
