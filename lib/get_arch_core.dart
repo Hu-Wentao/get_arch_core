@@ -11,7 +11,6 @@ export 'domain/value_validators.dart';
 export 'package:dartz/dartz.dart' show Either;
 
 export 'interface/i_common_interface.dart';
-export 'interface/i_dialog_helper.dart';
 export 'interface/i_dialog.dart';
 export 'interface/i_network.dart';
 export 'interface/i_storage.dart';
@@ -19,4 +18,5 @@ export 'package:freezed_annotation/freezed_annotation.dart';
 
 export 'profile/get_arch_application.dart';
 
-export 'package:injectable/injectable.dart';
+export 'package:get_it/get_it.dart';
+export 'package:injectable/injectable.dart' hide test;

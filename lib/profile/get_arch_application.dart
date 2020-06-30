@@ -26,7 +26,7 @@ class GetArchApplication {
       \_____|\___|\__| /_/    \_\_|  \___|_| |_|
 
 ''';
-  static const endInfo = '\t╠╬══╗ All the configuration are loaded ╔══════';
+  static const _endInfo = '\t╠╬══╗ All the configuration are loaded ╔══════';
   static Future run(
     EnvConfig globalConfig, {
     bool printConfig: true,
@@ -37,7 +37,7 @@ class GetArchApplication {
       await GetArchCorePackage().init(globalConfig, printConfig);
       if (packages != null)
         for (final pkg in packages) await pkg.init(globalConfig, printConfig);
-      print(endInfo);
+      print(_endInfo);
     } catch (e, s) {
       print(
           'GetArchApplication.run ## 初始化出错! Exception:[\n$e\n]\nStackTrace[\n$s\n]');
@@ -55,8 +55,12 @@ abstract class IGetArchPackage {
   Future<void> init(EnvConfig env, bool printConfig) async {
     final cfg = pkgEnv ?? env;
     if (printConfig ?? true) _printConf(cfg);
-    await initPackage(cfg);
-    await initPackageDI(cfg);
+    try {
+      await initPackage(cfg);
+      await initPackageDI(cfg);
+    }catch(e,s){
+      print('${this.runtimeType}.init ##  Error [\n$e\n] StackTrace [\n$s\n]');
+    }
   }
 
   // 起止行4个空格,信息内容行6个空格
