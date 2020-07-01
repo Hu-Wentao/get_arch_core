@@ -10,7 +10,7 @@ import 'package:get_arch_core/get_arch_part.dart';
 /// 在main()中,必须先执行 WidgetsFlutterBinding.ensureInitialized();
 ///
 /// ```dart
-/// Future<void> main() async {
+/// main() async {
 ///   WidgetsFlutterBinding.ensureInitialized();
 ///   await GetArchApplication.run(EnvConfig(...), packages: [...]);
 ///   runApp(MyApp());
@@ -39,8 +39,7 @@ class GetArchApplication {
         for (final pkg in packages) await pkg.init(globalConfig, printConfig);
       print(_endInfo);
     } catch (e, s) {
-      print(
-          'GetArchApplication.run ## 初始化出错! Exception:[\n$e\n]\nStackTrace[\n$s\n]');
+      print('GetArchApplication.run #### Init Error: [$e]\nStackTrace[\n$s\n]');
     }
   }
 }
@@ -58,8 +57,8 @@ abstract class IGetArchPackage {
     try {
       await initPackage(cfg);
       await initPackageDI(cfg);
-    }catch(e,s){
-      print('${this.runtimeType}.init ##  Error [\n$e\n] StackTrace [\n$s\n]');
+    } catch (e, s) {
+      print('${this.runtimeType}.init ### Error: [\n$e\n]\nStackTrace[\n$s\n]');
     }
   }
 
@@ -73,7 +72,7 @@ abstract class IGetArchPackage {
         StringBuffer(),
         (pre, kv) => pre
           ..writeln(
-              '\t  <${kv.key}>实现: ${kv.value == null ? '参数异常! 请检查Package配置!' : kv.value ? '启用' : '禁用'}'));
+              '\t  <${kv.key}>Implement: ${kv.value == null ? "ERROR! Please check Package's EnvConfig !" : kv.value ? 'ON' : 'OFF'}'));
     bf = printOtherStateWithEnvConfig(config)?.entries?.fold(
             (bf ?? StringBuffer()),
             (pre, kv) => pre..writeln('\t  ${kv.key} : ${kv.value}')) ??
