@@ -1,3 +1,8 @@
+## [0.5.0] - 2020/7/2
+* feat(GetArchApplication): run() can add mockDI param for unit testing.
+* refactor: beautify output info
+* add: Getting Started
+
 ## [0.4.0] - 2020/6/30
 * refactor(get_arch_application): hide GetArchApplication.endInfo;
 * feat(IGetArchPackage): init() add try..catch

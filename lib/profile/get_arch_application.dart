@@ -70,15 +70,15 @@ abstract class IGetArchPackage {
 
   // 起止行4个空格,信息内容行6个空格
   void _printConf(EnvConfig config) {
-    final start = '\t╠╬══╝ [${this.runtimeType}] Config Info ╚══════\n';
-    final endLn = '\t╚╚══╗ [${this.runtimeType}] Conf Loaded ╔══════';
+    final start = '\t╠╬══╝ [${this.runtimeType}] Config Profile ╚══════\n';
+    final endLn = '\t╚╚══╗ [${this.runtimeType}] Config  Loaded ╔══════';
 
     StringBuffer bf = printBoolStateWithRegTypeName?.entries?.fold<
             StringBuffer>(
         StringBuffer(),
         (pre, kv) => pre
           ..writeln(
-              '\t  <${kv.key}>Implement: ${kv.value == null ? "ERROR! Please check Package's EnvConfig !" : kv.value ? 'ON' : 'OFF'}'));
+              '\t  <${kv.key}>Implement: ${kv.value == null ? "ERROR! Please check package's EnvConfig !" : kv.value ? 'ON' : 'OFF'}'));
     bf = printOtherStateWithEnvConfig(config)?.entries?.fold(
             (bf ?? StringBuffer()),
             (pre, kv) => pre..writeln('\t  ${kv.key} : ${kv.value}')) ??
