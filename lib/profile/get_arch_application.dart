@@ -16,6 +16,10 @@ import 'package:get_arch_core/get_arch_part.dart';
 ///   runApp(MyApp());
 /// }
 /// ```
+/// [globalConfig] 全局环境配置
+/// [printConfig] 在Flutter中建议设置该值为 !kReleaseMode
+/// [packages] 其他实现了[IGetArchPackage]的类
+/// [mockDI] 该函数提供了一个 GetIt实例参数, 用于在单元测试中注册用于调试的依赖
 class GetArchApplication {
   static const logo = r'''
        _____      _                       _     
@@ -28,15 +32,17 @@ class GetArchApplication {
 ''';
   static const _endInfo = '\t╚╚═╗ All the configuration are loaded ╔══════';
   static Future run(
-    EnvConfig globalConfig, {
+    EnvConfig masterEnv, {
     bool printConfig: true,
     List<IGetArchPackage> packages,
+    Future<void> Function(GetIt g) mockDI,
   }) async {
     try {
       print(logo);
-      await GetArchCorePackage().init(globalConfig, printConfig);
+      await GetArchCorePackage().init(masterEnv, printConfig);
+      await mockDI(GetIt.I);
       if (packages != null)
-        for (final pkg in packages) await pkg.init(globalConfig, printConfig);
+        for (final pkg in packages) await pkg.init(masterEnv, printConfig);
       print(_endInfo);
     } catch (e, s) {
       print('GetArchApplication.run #### Init Error: [$e]\nStackTrace[\n$s\n]');
@@ -51,12 +57,12 @@ abstract class IGetArchPackage {
 
   IGetArchPackage(this.pkgEnv);
 
-  Future<void> init(EnvConfig env, bool printConfig) async {
-    final cfg = pkgEnv ?? env;
-    if (printConfig ?? true) _printConf(cfg);
+  Future<void> init(EnvConfig masterEnv, bool printConfig) async {
+    final env = pkgEnv ?? masterEnv;
+    if (printConfig ?? true) _printConf(env);
     try {
-      await initPackage(cfg);
-      await initPackageDI(cfg);
+      await initPackage(env);
+      await initPackageDI(env);
     } catch (e, s) {
       print('${this.runtimeType}.init ### Error: [\n$e\n]\nStackTrace[\n$s\n]');
     }
