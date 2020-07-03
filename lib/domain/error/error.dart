@@ -3,6 +3,20 @@
 // Date  : 2020/3/28
 // Time  : 11:25
 
+import 'package:verify/verify.dart';
+
+///
+/// 值对象验证错误
+/// 由错误的值对象的值在验证过程中返回的Error
+class ValidateError extends Error with ValidationError {
+  @override
+  final String errorDescription;
+  ValidateError(this.errorDescription);
+
+  @override
+  String toString() => 'ValidateError[$errorDescription]';
+}
+
 ///
 /// 包装Error
 abstract class MsgError<T> extends Error {
@@ -16,7 +30,7 @@ class UnexpectedValueError extends MsgError {
   UnexpectedValueError(dynamic left) : super(left);
 
   @override
-  String toString() => 'UnexpectedValueError{left: ${super.msg}';
+  String toString() => 'UnexpectedValueError: ${super.msg}';
 }
 
 ///

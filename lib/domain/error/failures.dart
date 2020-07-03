@@ -28,6 +28,7 @@ abstract class Failure extends Equatable {
   void onCreate() {}
 }
 
+@Deprecated('使用 ValidateError 替代')
 @freezed
 abstract class ValueFailure<T> with _$ValueFailure<T> {
   // 字符串超长

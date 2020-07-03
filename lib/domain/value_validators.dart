@@ -12,17 +12,15 @@ import 'error/failures.dart';
 /// 包含常用的值验证器
 /// 在value_objects和表示层中调用,用于验证输入值是否合法
 
-///
 /// 验证值的长度在区间 [min,max] 内
-Validator_<String> vStrLength({min: 0, max: 256}) =>
-    Verify.property((str) => str.length >= 0 && str.length <= max,
-        error: ValidateError('字符串长度不在区间[$min,$max]内'));
+Validator_<String> vStrLength([min = 0, max = 256, String errMsg]) =>
+    Verify.property((str) => str.length >= min && str.length <= max,
+        error: ValidateError(errMsg ?? '字符串长度不在区间[$min,$max]内'));
 
-///
 /// 验证值不为null或空
-final Validator_<String> vStrNotEmpty = Verify.property(
-    (str) => str?.isNotEmpty ?? false,
-    error: ValidateError('字符串不能为null或空'));
+Validator_<String> vStrNotEmpty([String errMsg = '字符串不能为null或空']) =>
+    Verify.property((str) => str?.isNotEmpty ?? false,
+        error: ValidateError(errMsg));
 
 @Deprecated('请使用[validateStrLength]')
 Either<ValueFailure<String>, String> validateMaxStringLength(
@@ -38,6 +36,7 @@ Either<ValueFailure<String>, String> validateMaxStringLength(
     ));
   }
 }
+
 @Deprecated('请使用[validateStrNotEmpty]')
 Either<ValueFailure<String>, String> validateStringNotEmpty(String input) {
   if (input.isEmpty) {
