@@ -11,4 +11,3 @@ export 'package:rxdart/rxdart.dart';
 export 'package:dartz/dartz.dart' hide State;
 export 'package:freezed_annotation/freezed_annotation.dart';
 export 'package:equatable/equatable.dart';
-export 'package:verify/verify.dart';

@@ -23,5 +23,8 @@ Future<void> main() async {
 }
 ```
 
+## GetArch
+![GetArch](GetArch.png)
+
 ## GetArch Universe
 ![GetArch Universe](GetArchUniverse.png)

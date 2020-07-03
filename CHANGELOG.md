@@ -1,4 +1,9 @@
-## [0.5.0] - 2020/7/2
+## [0.5.0] - 2020/7/3
+* remove(value_objects);
+* rename(i_common.dart): from common_interface.dart;
+* rename(i_dto.dart): from i_common_interface.dart;
+* feat(get_arch_core): export verify.dart;
+* add(GetArch.png): GetArch structure
 * feat(GetArchApplication): run() can add mockDI param for unit testing.
 * refactor: beautify output info
 * add: Getting Started
@@ -60,4 +65,4 @@ add(get_arch_core.dart): export injectable
 
 ## [0.0.1] - 2020/6/15
 
-* first release
+* first version

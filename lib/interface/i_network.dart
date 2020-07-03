@@ -7,7 +7,7 @@ import 'dart:async';
 import 'dart:convert';
 import 'package:equatable/equatable.dart';
 
-import 'i_common_interface.dart';
+import 'i_dto.dart';
 
 ///
 /// 网络配置
