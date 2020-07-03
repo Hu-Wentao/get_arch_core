@@ -9,4 +9,3 @@
 library get_arch_other;
 
 export 'package:dartz/dartz.dart';
-export 'package:verify/verify.dart';

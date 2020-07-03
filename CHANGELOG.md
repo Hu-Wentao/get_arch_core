@@ -1,4 +1,12 @@
-## [0.5.0] - 2020/7/3
+## [0.6.0] - 2020/7/3
+* move some unimportant file to GetArchQuickStart pacakge
+
+## [0.5.1] - 2020/7/3
+* update(GetArchUniverse.png);
+* fix(value_validators.dart): vStrLength logical error
+* add(error.dart): class "ValidateError"
+
+## [0.5.0] - 2020/7/2
 * remove(value_objects);
 * rename(i_common.dart): from common_interface.dart;
 * rename(i_dto.dart): from i_common_interface.dart;
