@@ -1,6 +1,6 @@
 name: get_arch_core
 description: flutter architecture package, Inspired by Explicit Architecture, Clean Architectures, DDD,
-version: 0.6.0
+version: 0.6.1
 repository: https://github.com/Hu-Wentao/get_arch_core
 
 environment:
@@ -11,7 +11,6 @@ dependencies:
     sdk: flutter
 
   get_it: ^4.0.2
-  injectable: ^0.4.0+1
   rxdart: ^0.24.1
   dartz: ^0.9.1
   equatable: ^1.2.0
@@ -20,6 +19,5 @@ dev_dependencies:
   flutter_test:
     sdk: flutter
   build_runner: ^1.10.0
-  injectable_generator: ^0.4.1
 
 flutter:

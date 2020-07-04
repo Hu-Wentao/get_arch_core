@@ -1,4 +1,9 @@
-## [0.6.0] - 2020/7/3
+## [0.6.1] - 2020/7/4  - fix bug
+* Fixed a bug where the GetArchApplication.run() mockDI parameter was null
+* remove: IVerifiable
+* remove: injectable package
+
+## [0.6.0] - 2020/7/3  - critical bug
 * move some unimportant file to GetArchQuickStart pacakge
 
 ## [0.5.1] - 2020/7/3

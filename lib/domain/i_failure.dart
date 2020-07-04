@@ -16,10 +16,10 @@ abstract class Failure extends Equatable {
   }
 
   @override
-  List<Object> get props => [this.msg];
+  List<Object> get props => [this.reportFailureType, this.msg];
 
   @override
-  String toString() => 'Failure[$msg]';
+  String toString() => 'Failure[$reportFailureType][$msg]';
 
   void onCreate() {}
 }

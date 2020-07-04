@@ -30,6 +30,8 @@ class _TestConfigPackage extends IGetArchPackage {
   Map<String, String> printOtherStateWithEnvConfig(EnvConfig config) => null;
 }
 
+///
+/// 下面的test只能逐个测试
 main() {
   test('_print full', () {
     GetArchApplication.run(EnvConfig('测试打印效果', '0.0.1', null, EnvSign.dev),

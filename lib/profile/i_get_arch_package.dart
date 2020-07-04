@@ -26,7 +26,7 @@ abstract class IGetArchPackage {
   // 起止行4个空格,信息内容行6个空格
   void _printConf(EnvConfig config) {
     final start = '\t╠╬══╝ [${this.runtimeType}] Config Profile ╚══════\n';
-    final endLn = '\t╚╚══╗ [${this.runtimeType}] Config  Loaded ╔══════';
+    final endLn = '\t╚╚═══ [${this.runtimeType}] Config  Loaded ═══════';
 
     StringBuffer bf = printBoolStateWithRegTypeName?.entries?.fold<
         StringBuffer>(

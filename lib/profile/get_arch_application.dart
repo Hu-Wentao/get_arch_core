@@ -32,7 +32,7 @@ class GetArchApplication {
       \_____|\___|\__| /_/    \_\_|  \___|_| |_|
 
 ''';
-  static const _endInfo = '\t╚╚═╗ All the configuration are loaded ╔══════';
+  static const _endInfo = '\t═════ All the configuration are loaded ════════';
   static Future run(
     EnvConfig masterEnv, {
     bool printConfig: true,
@@ -42,7 +42,7 @@ class GetArchApplication {
     try {
       print(logo);
       await GetArchCorePackage().init(masterEnv, printConfig);
-      await mockDI(GetIt.I);
+      await mockDI?.call(GetIt.I);
       if (packages != null)
         for (final pkg in packages) await pkg.init(masterEnv, printConfig);
       print(_endInfo);
