@@ -20,5 +20,4 @@ main() {
   test('get EnvSign from String ', () {
     expect(EnvSign.fromString('dev'), EnvSign.dev);
   });
-
 }

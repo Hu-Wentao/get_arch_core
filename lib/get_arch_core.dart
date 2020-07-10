@@ -5,7 +5,7 @@ export 'application/i_usecase.dart';
 export 'domain/i_failure.dart';
 export 'domain/i_entity.dart';
 export 'domain/extension.dart';
-export 'package:dartz/dartz.dart' show Either;
+export 'package:dartz/dartz.dart' show Either, Unit;
 export 'package:rxdart/rxdart.dart';
 
 export 'interface/i_dto.dart';

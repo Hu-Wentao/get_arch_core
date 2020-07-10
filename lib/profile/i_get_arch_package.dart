@@ -6,6 +6,7 @@
 import 'package:get_arch_core/domain/env_config.dart';
 
 ///
+/// All GetArch packages must implement this class
 /// 所有的GetArch包都必须实现本类
 abstract class IGetArchPackage {
   final EnvConfig pkgEnv;
@@ -29,13 +30,13 @@ abstract class IGetArchPackage {
     final endLn = '\t╚╚═══ [${this.runtimeType}] Config  Loaded ═══════';
 
     StringBuffer bf = printBoolStateWithRegTypeName?.entries?.fold<
-        StringBuffer>(
+            StringBuffer>(
         StringBuffer(),
-            (pre, kv) => pre
+        (pre, kv) => pre
           ..writeln(
               '\t  <${kv.key}>Implement: ${kv.value == null ? "ERROR! Please check package's EnvConfig !" : kv.value ? 'ON' : 'OFF'}'));
     bf = printOtherStateWithEnvConfig(config)?.entries?.fold(
-        (bf ?? StringBuffer()),
+            (bf ?? StringBuffer()),
             (pre, kv) => pre..writeln('\t  ${kv.key} : ${kv.value}')) ??
         bf;
 
