@@ -4,6 +4,7 @@
 // Time  : 19:26
 import 'package:dartz/dartz.dart';
 import 'package:get_arch_core/domain/i_failure.dart';
+import 'package:get_arch_core/get_arch_core.dart';
 
 ///
 /// 抽象用例
@@ -13,6 +14,12 @@ abstract class UseCase<Type, Params> {
   Future<Either<Failure, Type>> call(Params params);
 }
 
+abstract class ObservableUseCase<Type, Params> {
+  ValueStream<Either<Failure, Type>> call(Params params);
+}
+
+@Deprecated('Please Use [ObservableUseCase]'
+    'This feature was deprecated after v2.0.0')
 abstract class StmUseCase<Type, Params> {
   Stream<Either<Failure, Type>> call(Params params);
 }
