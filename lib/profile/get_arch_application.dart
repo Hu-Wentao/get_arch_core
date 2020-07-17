@@ -72,7 +72,7 @@ class GetArchCorePackage extends IGetArchPackage {
       };
 
   @override
-  Map<String, bool> get printBoolStateWithRegTypeName => null;
+  Map<Type, bool> get interfaceImplRegisterStatus => null;
 }
 
 // 可以通过如下代码来自动生成注册代码

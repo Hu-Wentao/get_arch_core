@@ -4,6 +4,7 @@
 // Time  : 23:46
 
 import 'package:get_arch_core/domain/env_config.dart';
+import 'package:meta/meta.dart';
 
 ///
 /// All GetArch packages must implement this class
@@ -29,8 +30,7 @@ abstract class IGetArchPackage {
     final start = '\t╠╬══╝ [${this.runtimeType}] Config Profile ╚══════\n';
     final endLn = '\t╚╚═══ [${this.runtimeType}] Config  Loaded ═══════';
 
-    StringBuffer bf = printBoolStateWithRegTypeName?.entries?.fold<
-            StringBuffer>(
+    StringBuffer bf = interfaceImplRegisterStatus?.entries?.fold<StringBuffer>(
         StringBuffer(),
         (pre, kv) => pre
           ..writeln(
@@ -44,8 +44,19 @@ abstract class IGetArchPackage {
     print(bf ?? endLn);
   }
 
-  // 打印bool类型的Package配置信息
-  Map<String, bool> get printBoolStateWithRegTypeName;
+  // 打印Package内接口实现的开关状态
+  @protected
+  Map<Type, bool> get interfaceImplRegisterStatus;
+
+  @Deprecated('Please use [interfaceImplRegisterStatus]'
+      'this method will remove >2.0.0')
+  Map<String, bool> get printBoolStateWithRegTypeName {
+    print(
+        'IGetArchPackage.printBoolStateWithRegTypeName # has been deprecated >0.6.1\n'
+        'Please use [interfaceImplRegisterStatus]');
+    return null;
+  }
+
   // 打印其他类型的Package配置信息
   Map<String, String> printOtherStateWithEnvConfig(EnvConfig config);
   // 初始化包

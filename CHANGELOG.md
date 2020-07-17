@@ -1,7 +1,11 @@
 ## [1.0.0] - 2020/7
+* add : LiveData, LiveModel
+* add : "IGetArchPackage.interfaceImplRegisterStatus"
 * feat : get_arch_core export Unit
 * feat : StmUseCase rename to ObservableUseCase
 * feat : get_arch_core.dart export "EnvConfig"
+* remove : flutter sdk dependencies
+* deprecated : "printBoolStateWithRegTypeName" please use "IGetArchPackage.interfaceImplRegisterStatus"
 
 ## [0.6.1] - 2020/7/4  - fix bug
 * Fixed a bug where the GetArchApplication.run() mockDI parameter was null
