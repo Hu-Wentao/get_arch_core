@@ -5,6 +5,7 @@
 * feat : StmUseCase rename to ObservableUseCase
 * feat : get_arch_core.dart export "EnvConfig"
 * remove : flutter sdk dependencies
+* refactor: replace "flutter_test" package with "test" package
 * deprecated : "printBoolStateWithRegTypeName" please use "IGetArchPackage.interfaceImplRegisterStatus"
 
 ## [0.6.1] - 2020/7/4  - fix bug

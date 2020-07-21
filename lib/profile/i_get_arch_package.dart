@@ -29,7 +29,6 @@ abstract class IGetArchPackage {
   void _printConf(EnvConfig config) {
     final start = '\t╠╬══╝ [${this.runtimeType}] Config Profile ╚══════\n';
     final endLn = '\t╚╚═══ [${this.runtimeType}] Config  Loaded ═══════';
-
     StringBuffer bf = interfaceImplRegisterStatus?.entries?.fold<StringBuffer>(
         StringBuffer(),
         (pre, kv) => pre
@@ -48,14 +47,11 @@ abstract class IGetArchPackage {
   @protected
   Map<Type, bool> get interfaceImplRegisterStatus;
 
-  @Deprecated('Please use [interfaceImplRegisterStatus]'
+  @Deprecated(
+      'IGetArchPackage.printBoolStateWithRegTypeName # has been deprecated >0.6.1\n'
+      'Please use [interfaceImplRegisterStatus]\n'
       'this method will remove >2.0.0')
-  Map<String, bool> get printBoolStateWithRegTypeName {
-    print(
-        'IGetArchPackage.printBoolStateWithRegTypeName # has been deprecated >0.6.1\n'
-        'Please use [interfaceImplRegisterStatus]');
-    return null;
-  }
+  Map<String, bool> get printBoolStateWithRegTypeName => null;
 
   // 打印其他类型的Package配置信息
   Map<String, String> printOtherStateWithEnvConfig(EnvConfig config);
