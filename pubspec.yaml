@@ -7,17 +7,14 @@ environment:
   sdk: ">=2.7.0 <3.0.0"
 
 dependencies:
-  flutter:
-    sdk: flutter
-
   get_it: ^4.0.2
+  meta: ">=1.1.8 <2.0.0"
   rxdart: ^0.24.1
   dartz: ^0.9.1
-  equatable: ^1.2.0
+  equatable: ^1.2.2
 
 dev_dependencies:
-  flutter_test:
-    sdk: flutter
+  test: ^1.15.3
   build_runner: ^1.10.0
 
 flutter:
