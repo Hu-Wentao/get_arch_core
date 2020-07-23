@@ -6,7 +6,6 @@
 import 'dart:async';
 
 import 'package:get_arch_core/get_arch_core.dart';
-import 'package:meta/meta.dart';
 
 ///
 /// 提供可观察的数据
@@ -19,127 +18,70 @@ import 'package:meta/meta.dart';
 /// 注意:
 ///   请将 [LiveData] / [ControlledLiveModel]放在ViewModel中使用
 ///
-abstract class LiveData<T> {
-  ///
-  /// [obsData] 得到可观察的数据
-  /// [getData] 请求获取最新的数据的方法
-  /// 请确保[getData]方法在调用并获取到最新的结果后,[obs Data]会主动推送最新的值,
-  ///   否则应使用[ControlledLiveData]
-  factory LiveData({
+/// 请确保, 当[getData]方法调用时, [obsData]会主动推送最新数据
+class LiveData<T> {
+  final Future<T> Function() _getData;
+  final Stream<T> _obsData;
+
+  T _latestData;
+
+  LiveData({
     Future<T> Function() getData,
-    @required Stream<T> obsData,
-  }) =>
-      _LiveDataImpl<T>(getData, obsData);
+    Stream<T> obsData,
+  })  : _getData = getData,
+        _obsData = obsData == null
+            ? null
+            : obsData.isBroadcast ? obsData : obsData.asBroadcastStream() {
+    obsData?.listen((event) => _latestData = event);
+  }
 
   ///
   /// 从数据源获取最新的数据
   ///
   /// 注意, 调用[getData]方法成功后, [obsData]也应当同步刷新最新的值,
   /// 如果无法做到, 应使用[ControlledLiveData]
-  Future<T> get getData;
+  Future<T> get getData => _getData == null ? _latestData : _getData();
 
   ///
   /// 观察数据
   /// 在首次观察时,即返回一次最新的数据
-  Stream<T> get obsData;
+  Stream<T> get obsData => _obsData;
 
   ///
   /// 直接返回缓存的快照数据
-  T get snapshot;
+  T get snapshot => _latestData;
 
   ///
   /// 获取已缓存的最新的数据
   /// 如果此时数据没有初始化,则自动调用获取数据的方法
-  Future<T> get cachedData;
+  Future<T> get cachedData async => _latestData ?? await getData;
 }
 
 ///
-/// [LiveData]标准实现
-/// 请确保, 当[getData]方法调用时, [obsData]会主动推送最新数据
-class _LiveDataImpl<T> implements LiveData<T> {
-  final Future<T> Function() _getData;
-  final Stream<T> _obsData;
+/// [ControlledLiveDataMix] 持有[StreamController], 拥有向[obsData]添加数据的能力
+mixin ControlledLiveDataMix<T> on LiveData<T> {
+  StreamController<T> _ctrl = StreamController.broadcast();
 
-  T _latestData;
+  void postData(T data) => _ctrl.add(data);
 
-  _LiveDataImpl(
-    Future<T> Function() getData,
-    Stream<T> obsData,
-  )   : assert(obsData != null),
-        _getData = getData,
-        _obsData = obsData.isBroadcast ? obsData : obsData.asBroadcastStream() {
-    obsData.listen((event) => _latestData = event);
-  }
-
-  Future<T> get getData => _getData?.call();
-
-  Stream<T> get obsData async* {
-    yield await cachedData;
-    yield* _obsData;
-  }
-
-  T get snapshot => _latestData;
-
-  Future<T> get cachedData async => _latestData ?? await getData;
+  @override
+  Stream<T> get obsData => _ctrl.stream;
 }
 
 ///
 /// 主动刷新实现
-/// [ControlledLiveData] 持有[StreamController], 拥有向[obsData]添加数据的能力
 /// 仅当 [getData]方法调用时, [obsData]不会主动推送最新数据的情况下才使用本实现
-class ControlledLiveData<T> implements LiveData<T> {
-  final Future<T> Function() _getData;
-
-  Stream<T> get _obsData => _ctrl.stream;
-  StreamController<T> _ctrl;
-  T _latestData;
-
-  ///
-  /// [obsData] 得到可观察的数据
-  /// [getData] 请求获取最新的数据的方法
-  ControlledLiveData(
-    Future<T> Function() getData,
-    Stream<T> obsData,
-  )   : _ctrl = StreamController.broadcast()..addStream(obsData),
-        _getData = getData {
-    _obsData.listen((event) => _latestData = event);
-  }
-
-  ///
-  /// 添加数据
-  void postData(T data) => _ctrl.add(data);
-
-  ///
-  /// 从数据源获取最新的数据
-  ///
-  /// 调用[_getData]方法成功后, [_obsData]同步刷新最新的值,
-  Future<T> get getData => _getData()..then((value) => _ctrl.add(value));
-
-  ///
-  /// 观察数据
-  /// 在首次观察时,即返回一次最新的数据
-  Stream<T> get obsData async* {
-    yield await cachedData;
-    yield* _obsData;
-  }
-
-  ///
-  /// 直接返回缓存的快照数据
-  T get snapshot => _latestData;
-
-  ///
-  /// 获取已缓存的最新的数据
-  /// 如果此时数据没有初始化,则自动调用获取数据的方法
-  /// 由于[getData]执行后, 最新的值会自动刷新[_latestData],因此不使用 ??= 而是使用 ??
-  Future<T> get cachedData async => _latestData ?? await getData;
+class ControlledLiveData<T> extends LiveData<T> with ControlledLiveDataMix<T> {
+  ControlledLiveData({Future<T> Function() getData}) : super(getData: getData);
 }
 
+/// 包装LiveData<Either<Failure, T>>
 mixin LiveModelMix<T> on LiveData<Either<Failure, T>> {
   ///
   /// 本方法是对 [snapshot].fold() 的包装
   ///
   /// [onNull] 当[snapshot]为null时, 将会调用改函数, 一般是由于[snapshot]尚未获取初始值导致的
-  ///   该值可以为null, 此时会调用 [onData], 传入参数为 null
+  ///   当[snapshot]和[onNull]均为null时, 会调用 [onData], 传入参数为 null
   /// [onFailure] 当LiveModel值为Failure时被调用
   /// [onData] 当LiveModel值正常时被调用
   snapFold<R>({
@@ -152,22 +94,21 @@ mixin LiveModelMix<T> on LiveData<Either<Failure, T>> {
 
 ///
 /// 配合[ObservableUseCase]或[UseCase]使用
-abstract class LiveModel<T> extends LiveData<Either<Failure, T>>
-    with LiveModelMix<T> {
-  factory LiveModel({
-    @required Future<Either<Failure, T>> Function() getData,
-    @required Stream<Either<Failure, T>> obsData,
-  }) =>
-      LiveData(getData: getData, obsData: obsData);
+class LiveModel<T> extends LiveData<Either<Failure, T>> with LiveModelMix<T> {
+  LiveModel({
+    Future<Either<Failure, T>> Function() getData,
+    Stream<Either<Failure, T>> obsData,
+  }) : super(getData: getData, obsData: obsData);
 }
 
 ///
 /// [ControlledLiveModel] 持有[StreamController], 拥有向[obsData]添加数据的能力
-abstract class ControlledLiveModel<T>
-    extends ControlledLiveData<Either<Failure, T>> with LiveModelMix<T> {
-  factory ControlledLiveModel({
-    @required Future<Either<Failure, T>> Function() getData,
-    @required Stream<Either<Failure, T>> obsData,
-  }) =>
-      LiveData(getData: getData, obsData: obsData);
+class ControlledLiveModel<T> extends LiveModel<T>
+    with LiveModelMix<T>, ControlledLiveDataMix<Either<Failure, T>> {
+  ControlledLiveModel({Future<Either<Failure, T>> Function() getData})
+      : super(getData: getData);
+
+  void postRight(T data) => this.postData(right(data));
+
+  void postLeft(Failure failure) => this.postData(left(failure));
 }
