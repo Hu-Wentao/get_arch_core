@@ -2,9 +2,6 @@
 // Email : hu.wentao@outlook.com
 // Date  : 2020/1/17
 // Time  : 19:26
-import 'package:dartz/dartz.dart';
-import 'package:get_arch_core/domain/i_failure.dart';
-import 'package:get_arch_core/domain/live_data.dart';
 import 'package:get_arch_core/get_arch_core.dart';
 
 ///
