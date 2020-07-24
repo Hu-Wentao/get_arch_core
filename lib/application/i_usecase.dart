@@ -24,7 +24,7 @@ abstract class ObservableUseCase<Out, In> {
 ///
 /// 无需返回值的用例
 /// [In] 用例的参数类型
-abstract class CompletableUseCase<In>  extends UseCase<Unit, In>{}
+abstract class CompletableUseCase<In> extends UseCase<Unit, In> {}
 
 @Deprecated('Please Use [ObservableUseCase]'
     'This feature was deprecated after v2.0.0')

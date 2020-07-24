@@ -58,7 +58,8 @@ main() {
   });
 
   test('_print null all conf', () {
-    GetArchApplication.run(null, packages: [ // 不配置环境
+    GetArchApplication.run(null, packages: [
+      // 不配置环境
       _TestConfigPackage(null),
     ]);
   });

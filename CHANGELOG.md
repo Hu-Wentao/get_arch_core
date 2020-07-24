@@ -1,8 +1,9 @@
 ## [1.0.0] - 2020/7
 * add : LiveData, LiveModel
 * add : "IGetArchPackage.interfaceImplRegisterStatus"
-* feat(liva_data): 新增ControlledLiveData, 允许直接通过实例刷新数据
+* feat(liva_data): add "ControlledLiveData", Allows data to be refreshed by the instance
 * feat(get_arch_core): export 'package:meta/meta.dart'; dartz.right;dartz.left;
+* feat(i_entity): Added generics to the IEntity
 * feat : get_arch_core export Unit
 * feat : StmUseCase rename to ObservableUseCase
 * feat : get_arch_core.dart export "EnvConfig"

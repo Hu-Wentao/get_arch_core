@@ -6,8 +6,8 @@
 import 'package:equatable/equatable.dart';
 
 /// 实体类实现本接口
-abstract class IEntity extends Equatable {
-  String get id;
+abstract class IEntity<T> extends Equatable {
+  T get id;
 
   final bool stringify = true;
 }
