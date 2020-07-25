@@ -24,5 +24,5 @@ abstract class ICrudRepository<E extends IEntity<IdTp>, IdTp>
   Future<Either<Failure, E>> update(IdTp id);
 
   /// 删
-  Future<Either<Failure, E>> delete(IdTp id);
+  Future<Either<Failure, Unit>> delete(IdTp id);
 }
