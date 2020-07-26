@@ -1,0 +1,26 @@
+name: simple
+description: a shopping cart app, example for get_arch_core
+
+publish_to: 'none' # Remove this line if you wish to publish to pub.dev
+version: 1.0.0+1
+
+environment:
+  sdk: ">=2.7.0 <3.0.0"
+
+dependencies:
+  flutter:
+    sdk: flutter
+
+  # 0.1 最重要的当然是导入 get_arch_core了
+  # (如果你使用 get_arch_quick_start, 下面绝大多数包都无需手动添加到yaml中了)
+  get_arch_core:
+    path: ../../
+  injectable: ^1.0.2
+dev_dependencies:
+  flutter_test:
+    sdk: flutter
+  injectable_generator: ^1.0.2
+
+flutter:
+
+  uses-material-design: true
