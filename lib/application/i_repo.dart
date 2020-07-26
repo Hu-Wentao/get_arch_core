@@ -13,7 +13,8 @@ abstract class IRepository<E extends IEntity<IdTp>, IdTp> {}
 abstract class ICrudRepository<E extends IEntity<IdTp>, IdTp>
     extends IRepository<E, IdTp> {
   /// 增
-  Future<Either<Failure, E>> create();
+  /// (当数据通过网络同步后, 返回值不一定与输入值相同, 因此这里的返回值不是[Unit]类型)
+  Future<Either<Failure, E>> create(E entity);
 
   /// 查
   Future<Either<Failure, E>> read(IdTp id);
@@ -21,7 +22,8 @@ abstract class ICrudRepository<E extends IEntity<IdTp>, IdTp>
   LiveModel<E> observe(IdTp id);
 
   /// 改
-  Future<Either<Failure, E>> update(IdTp id);
+  /// (当数据通过网络同步后, 返回值不一定与输入值相同, 因此这里的返回值不是[Unit]类型)
+  Future<Either<Failure, E>> update(E item);
 
   /// 删
   Future<Either<Failure, Unit>> delete(IdTp id);
