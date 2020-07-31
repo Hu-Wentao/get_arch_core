@@ -1,7 +1,6 @@
 library get_arch_core;
 
 export 'application/i_usecase.dart';
-export 'application/live_data.dart';
 
 export 'domain/i_failure.dart';
 export 'domain/i_entity.dart';

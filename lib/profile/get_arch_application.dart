@@ -36,7 +36,7 @@ class GetArchApplication {
   static Future run(
     EnvConfig masterEnv, {
     bool printConfig: true,
-    List<IGetArchPackage> packages,
+    @required List<IGetArchPackage> packages,
     Future<void> Function(GetIt g) mockDI,
   }) async {
     try {

@@ -18,7 +18,7 @@ abstract class UseCase<Out, In> {
 /// [Out] 用例(正确的)返回值类型
 /// [In] 用例的参数类型
 abstract class ObservableUseCase<Out, In> {
-  LiveModel<Out> call(In params);
+  Stream<Either<Failure, Out>> call(In params);
 }
 
 ///

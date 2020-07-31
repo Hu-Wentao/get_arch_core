@@ -19,7 +19,7 @@ abstract class ICrudRepository<E extends IEntity<IdTp>, IdTp>
   /// 查
   Future<Either<Failure, E>> read(IdTp id);
   // 观察对象
-  LiveModel<E> observe(IdTp id);
+  Stream<Either<Failure, E>> observe(IdTp id);
 
   /// 改
   /// (当数据通过网络同步后, 返回值不一定与输入值相同, 因此这里的返回值不是[Unit]类型)

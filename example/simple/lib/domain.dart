@@ -31,5 +31,5 @@ class Item extends IEntity<String> {
 /// 未知错误
 class UnknownFailure extends Failure {
   UnknownFailure(String msg, [dynamic trace])
-      : super('UnknownFailure', '\n[$msg]\ntrace:\n[$trace]');
+      : super('UnknownFailure', '\n展示未知错误信息:[$msg]\ntrace:\n[$trace]');
 }

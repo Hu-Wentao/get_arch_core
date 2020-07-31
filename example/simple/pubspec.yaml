@@ -19,8 +19,8 @@ dependencies:
 dev_dependencies:
   flutter_test:
     sdk: flutter
-  injectable_generator: ^1.0.2
-
+  injectable_generator: ^1.0.3
+  build_runner: ^1.10.1
 flutter:
 
   uses-material-design: true

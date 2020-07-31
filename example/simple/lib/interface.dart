@@ -1,5 +1,4 @@
 import 'package:dartz/dartz.dart';
-import 'package:get_arch_core/application/live_data.dart';
 import 'package:get_arch_core/domain/i_failure.dart';
 import 'package:injectable/injectable.dart';
 import 'package:simple/application.dart';
@@ -9,13 +8,21 @@ import 'package:simple/domain.dart';
 /// 数据源, 可以是API, 蓝牙设备, 本地存储等
 
 ///
-/// 这里定义一个不具有持久化存储能力的Mock本地数据源
-abstract class IItemLocalource {
-  void saveItem(Item i, {String k});
+/// 这里定义一个本地数据源
+/// 5.1 一般不建议使用[osbAll]这样的方法, 可能会造成性能问题
+///   例如本例中的商品列表, UI仅仅改变了某一种商品的数量,
+///   而数据源却需要刷新所有数据, 整个列表也将重建.
+///   Stream返回值适用于蓝牙数据传输或者WebSocket数据传输
+abstract class IItemLocalSource {
+  void saveItem(Item i, {String id});
 
   Item getItem(String k);
 
-  LiveModel<Item> obsItem(String id);
+  Stream<Item> obsItem(String id);
+
+  Stream<List<Item>> osbAll();
+
+  Future<List<Item>> getAll();
 }
 
 ///
@@ -31,7 +38,7 @@ abstract class IItemLocalource {
 /// 6.3 如果有多个数据源, Repo的实现方法中, 实现数据缓存等功能
 @LazySingleton(as: IItemRepo)
 class ItemRepoImpl extends IItemRepo {
-  final IItemLocalource _itemSource;
+  final IItemLocalSource _itemSource;
 
   ItemRepoImpl(this._itemSource);
 
@@ -50,7 +57,7 @@ class ItemRepoImpl extends IItemRepo {
   @override
   Future<Either<Failure, Unit>> delete(String id) async {
     try {
-      _itemSource.saveItem(null, k: id);
+      _itemSource.saveItem(null, id: id);
       return right(null);
     } on Failure catch (f) {
       return left(f);
@@ -60,7 +67,15 @@ class ItemRepoImpl extends IItemRepo {
   }
 
   @override
-  LiveModel<Item> observe(String id) => _itemSource.obsItem(id);
+  Stream<Either<Failure, Item>> observe(String id) async* {
+    try {
+      yield* _itemSource.obsItem(id).map((event) => right(event));
+    } on Failure catch (f) {
+      yield left(f);
+    } catch (e, s) {
+      yield left(UnknownFailure('ItemRepoImpl.observe:\n$e\n', s));
+    }
+  }
 
   @override
   Future<Either<Failure, Item>> read(String id) async {
@@ -83,6 +98,42 @@ class ItemRepoImpl extends IItemRepo {
       return left(f);
     } catch (e, s) {
       return left(UnknownFailure('ItemRepoImpl.update:\n$e\n', s));
+    }
+  }
+
+  @override
+//  Stream<Either<Failure, List<Item>>> observeAll() => _obsAll()
+  Stream<Either<Failure, List<Item>>> observeAll() => _itemSource
+      .osbAll()
+      .map<Either<Failure, List<Item>>>(
+        (event) => right(event),
+      )
+      // fixme: handleError无法处理异常情况, 但如果使用 [_obsAll]则无法正常监听到消息
+      .handleError((e) => left(e))
+      .asBroadcastStream();
+
+  Stream<Either<Failure, List<Item>>> _obsAll() async* {
+    try {
+      yield* _itemSource.osbAll().map((event) {
+        print('ItemRepoImpl._obsAll ##事件$event');
+        return right(event);
+      });
+    } on Failure catch (f) {
+      yield left(f);
+    } catch (e, s) {
+      yield left(UnknownFailure('ItemRepoImpl.observeAll:\n$e\n', s));
+    }
+  }
+
+  @override
+  Future<Either<Failure, List<Item>>> readAll() async {
+    try {
+      final r = await _itemSource.getAll();
+      return right(r);
+    } on Failure catch (f) {
+      return left(f);
+    } catch (e, s) {
+      return left(UnknownFailure('ItemRepoImpl.readAll:\n$e\n', s));
     }
   }
 }

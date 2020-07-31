@@ -1,6 +1,5 @@
 import 'package:get_arch_core/application/i_repo.dart';
 import 'package:get_arch_core/application/i_usecase.dart';
-import 'package:get_arch_core/application/live_data.dart';
 import 'package:get_arch_core/get_arch_core.dart';
 import 'package:injectable/injectable.dart';
 import 'package:simple/domain.dart';
@@ -15,7 +14,10 @@ import 'package:simple/domain.dart';
 /// 3.2 这里添加无需[lazySingleton]注解, 因为这个类是抽象类, 无法获得实例
 ///   应当在该类的实现类上添加注解, 并且将注解类型标记为[IItemRepo],
 ///   例如[ItemRepoImpl]
-abstract class IItemRepo extends ICrudRepository<Item, String> {}
+abstract class IItemRepo extends ICrudRepository<Item, String> {
+  Future<Either<Failure, List<Item>>> readAll();
+  Stream<Either<Failure, List<Item>>> observeAll();
+}
 
 ///
 /// <4> UseCase
@@ -63,7 +65,7 @@ class ObsItem extends ObservableUseCase<Item, String> {
   ObsItem(this._repo);
 
   @override
-  LiveModel<Item> call(String id) => _repo.observe(id);
+  Stream<Either<Failure, Item>> call(String id) => _repo.observe(id);
 }
 
 ///

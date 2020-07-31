@@ -1,4 +1,4 @@
-## [1.0.0] - 2020/7
+## [1.0.0] - 2020/7/31
 * add : LiveData, LiveModel
 * add : "IGetArchPackage.interfaceImplRegisterStatus"
 * feat(liva_data): add "ControlledLiveData", Allows data to be refreshed by the instance
