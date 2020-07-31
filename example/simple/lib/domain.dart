@@ -26,10 +26,3 @@ class Item extends IEntity<String> {
 /// <2> Failure
 /// 2.1 每一个App都会有与业务逻辑对应的Failure
 /// (在get_arch_quick_start中, 已预设一些常用Failure)
-
-///
-/// 未知错误
-class UnknownFailure extends Failure {
-  UnknownFailure(String msg, [dynamic trace])
-      : super('UnknownFailure', '\n展示未知错误信息:[$msg]\ntrace:\n[$trace]');
-}

@@ -1,6 +1,7 @@
 ## [1.0.0] - 2020/7/31
 * add : LiveData, LiveModel
 * add : "IGetArchPackage.interfaceImplRegisterStatus"
+* add(i_failure) :　Failure.auto(dynaimc err) constructor
 * feat(liva_data): add "ControlledLiveData", Allows data to be refreshed by the instance
 * feat(get_arch_core): export 'package:meta/meta.dart'; dartz.right;dartz.left;
 * feat(i_entity): Added generics to the IEntity

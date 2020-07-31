@@ -3,6 +3,7 @@ import 'package:get_arch_core/domain/i_failure.dart';
 import 'package:injectable/injectable.dart';
 import 'package:simple/application.dart';
 import 'package:simple/domain.dart';
+import 'package:rxdart/rxdart.dart';
 
 /// <5> DataSource
 /// 数据源, 可以是API, 蓝牙设备, 本地存储等
@@ -102,28 +103,14 @@ class ItemRepoImpl extends IItemRepo {
   }
 
   @override
-//  Stream<Either<Failure, List<Item>>> observeAll() => _obsAll()
   Stream<Either<Failure, List<Item>>> observeAll() => _itemSource
       .osbAll()
       .map<Either<Failure, List<Item>>>(
         (event) => right(event),
       )
-      // fixme: handleError无法处理异常情况, 但如果使用 [_obsAll]则无法正常监听到消息
-      .handleError((e) => left(e))
+      // 注意, [onErrorReturnWith]是rx_dart包中的方法
+      .onErrorReturnWith((e) => left(Failure.auto(e)))
       .asBroadcastStream();
-
-  Stream<Either<Failure, List<Item>>> _obsAll() async* {
-    try {
-      yield* _itemSource.osbAll().map((event) {
-        print('ItemRepoImpl._obsAll ##事件$event');
-        return right(event);
-      });
-    } on Failure catch (f) {
-      yield left(f);
-    } catch (e, s) {
-      yield left(UnknownFailure('ItemRepoImpl.observeAll:\n$e\n', s));
-    }
-  }
 
   @override
   Future<Either<Failure, List<Item>>> readAll() async {

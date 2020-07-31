@@ -15,6 +15,9 @@ abstract class Failure extends Equatable {
     onCreate();
   }
 
+  /// 自动包装
+  factory Failure.auto(dynamic e) => e is Failure ? e : UnknownFailure(e);
+
   @override
   List<Object> get props => [this.reportFailureType, this.msg];
 
@@ -22,4 +25,11 @@ abstract class Failure extends Equatable {
   String toString() => 'Failure[$reportFailureType][$msg]';
 
   void onCreate() {}
+}
+
+///
+/// 未知错误
+class UnknownFailure extends Failure {
+  UnknownFailure(String msg, [dynamic trace])
+      : super('UnknownFailure', '[$msg]\ntrace:[$trace]');
 }
