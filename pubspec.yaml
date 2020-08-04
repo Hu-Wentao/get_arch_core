@@ -15,6 +15,7 @@ dependencies:
 
 dev_dependencies:
   test: ^1.15.3
-  build_runner: ^1.10.0
+#  build_runner: ^1.10.0
+#  analyzer: '<=0.39.11' # https://github.com/dart-lang/build/issues/2745 # 关于build_runner的报错
 
 flutter:

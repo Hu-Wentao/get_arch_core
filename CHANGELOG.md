@@ -1,3 +1,6 @@
+## [1.0.1] -2020/8/4
+* feat(get_arch_core) : export dartz, show Tuple2, Tuple3
+* feat(extension.dart): leftOrNull() for  Either<L, R>; asyncLeftOrNull() for Future<Either<L, R>>;
 ## [1.0.0] - 2020/7/31
 * add : LiveData, LiveModel
 * add : "IGetArchPackage.interfaceImplRegisterStatus"
