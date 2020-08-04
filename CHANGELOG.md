@@ -1,7 +1,12 @@
-## [1.0.1] -2020/8/4
+## [1.1.0] -2020/8/4
 * refactor: Adjust the directory structure
 * feat(get_arch_core) : export dartz, show Tuple2, Tuple3
-* feat(extension.dart): leftOrNull() for  Either<L, R>; asyncLeftOrNull() for Future<Either<L, R>>;
+* feat(extension.dart):
+    Either<L, R>:
+        leftOrNull() for for getting Left;
+    Future<Either<L, R>>:
+        asyncLeftOrNull() for getting Left asynchronously ;
+        asyncMap() for asynchronous mapping;
 ## [1.0.0] - 2020/7/31
 * add : LiveData, LiveModel
 * add : "IGetArchPackage.interfaceImplRegisterStatus"

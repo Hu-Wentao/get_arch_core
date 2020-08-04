@@ -33,4 +33,9 @@ extension FutureEitherX<L, R> on Future<Either<L, R>> {
 
   Future<B> asyncFold<B>(B ifLeft(L l), B ifRight(R r)) =>
       then((value) => value.fold<B>(ifLeft, ifRight));
+
+  ///
+  /// 包装了已有的Map
+  Future<Either<L, R2>> asyncMap<R2>(R2 map(R r)) =>
+      then((value) => value.fold(left, (R r) => right(map(r))));
 }
