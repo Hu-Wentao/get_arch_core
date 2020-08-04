@@ -10,14 +10,12 @@ main() {
   test('EitherX', () {
     Either<Failure, Foo> e = Right(Foo(2));
     expect(e.leftOrNull(), null);
-    expect(e.leftOrNull((r){
+    expect(e.leftOrNull((r) {
       print('main #[$r] ..do sth on Right');
     }), null);
 
-
     e = Left(UnknownFailure('test'));
     expect(e.leftOrNull(), UnknownFailure('test'));
-
   });
 
   test('FutureEitherX', () {
