@@ -7,6 +7,8 @@
     Future<Either<L, R>>:
         asyncLeftOrNull() for getting Left asynchronously ;
         asyncMap() for asynchronous mapping;
+* feat(i_failure.dart):
+    Failure.auto() add [String msg] param;
 ## [1.0.0] - 2020/7/31
 * add : LiveData, LiveModel
 * add : "IGetArchPackage.interfaceImplRegisterStatus"
