@@ -16,7 +16,7 @@ abstract class Failure extends Equatable {
   }
 
   /// 自动包装
-  factory Failure.auto(dynamic e) => e is Failure ? e : UnknownFailure(e);
+  factory Failure.auto(dynamic e,[dynamic stackTrace]) => e is Failure ? e : UnknownFailure(e,stackTrace);
 
   @override
   List<Object> get props => [this.reportFailureType, this.msg];
