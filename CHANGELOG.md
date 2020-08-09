@@ -1,9 +1,11 @@
-## [1.1.0] -2020/8/4
+## [1.1.0] -2020/8/9
 * refactor: Adjust the directory structure
 * feat(get_arch_core) : export dartz, show Tuple2, Tuple3
 * feat(extension.dart):
     Either<L, R>:
         leftOrNull() for for getting Left;
+    R rightOrElse([R Function(L l) onLeft]) =>
+        fold<R>((l) => onLeft?.call(l), id);
     Future<Either<L, R>>:
         asyncLeftOrNull() for getting Left asynchronously ;
         asyncMap() for asynchronous mapping;

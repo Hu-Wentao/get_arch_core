@@ -19,10 +19,15 @@ extension EitherX<L, R> on Either<L, R> {
   ///
   /// 用于转换用例返回值给View,以便展示ErrDialog,
   /// 返回值为Failure或null
-  L leftOrNull([void Function(R r) onRight]) => fold(id, (r) {
+  L leftOrNull([void Function(R r) onRight]) => fold<L>(id, (r) {
         onRight?.call(r);
         return null;
       });
+
+  ///
+  /// 与 [getOrElse] 相似, 但本方法允许调用onLeft时获取到 L 实例
+  R rightOrElse([R Function(L l) onLeft]) =>
+      fold<R>((l) => onLeft?.call(l), id);
 }
 
 extension FutureEitherX<L, R> on Future<Either<L, R>> {
