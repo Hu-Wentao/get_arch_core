@@ -21,7 +21,7 @@ abstract class IGetArchPackage {
       await initPackage(env);
       await initPackageDI(env);
     } catch (e, s) {
-      print('${this.runtimeType}.init ### Error: [\n$e\n]\nStackTrace[\n$s\n]');
+      print('[${this.runtimeType}].init ### Error: [\n$e\n]\nStackTrace[\n$s\n]');
     }
   }
 
