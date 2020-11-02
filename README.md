@@ -3,6 +3,7 @@
 GetArch core package
 
 ## Getting Started
+
 ```dart
 Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -24,6 +25,8 @@ Future<void> main() async {
 ```
 
 ## Complete project structure:
+
+```text
 lib
 |-- domain
 |   |-- entity ...
@@ -50,6 +53,7 @@ lib
 |   |-- xxx_package.dart
 |   '-- ...
 '-- main.dart
+```
 
 ## GetArch
 ![GetArch](GetArch.png)
