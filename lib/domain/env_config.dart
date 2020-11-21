@@ -39,25 +39,19 @@ class EnvConfig extends Equatable {
   final bool stringify = true;
 }
 
-class EnvSign {
-  final String _sign;
-  const EnvSign.fromString(this._sign);
+enum EnvSign {
+  dev,
+  test,
+  staging,
+  prod,
+}
 
-  static const EnvSign dev = const EnvSign.fromString('dev');
-  static const EnvSign test = const EnvSign.fromString('test');
-  static const EnvSign prod = const EnvSign.fromString('prod');
-
-  @override
-  String toString() => _sign;
-
-  @override
-  bool operator ==(Object other) =>
-      (identical(this, other)) ||
-      (other is String && other == _sign) ||
-      (other is EnvSign &&
-          runtimeType == other.runtimeType &&
-          _sign == other._sign);
-
-  @override
-  int get hashCode => _sign.hashCode;
+extension EnvSignX on Iterable<EnvSign> {
+  static const _map = {
+    'dev': EnvSign.dev,
+    'test': EnvSign.test,
+    'staging': EnvSign.staging,
+    'prod': EnvSign.prod,
+  };
+  fromString(String sign) => _map[sign];
 }
