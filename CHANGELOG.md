@@ -1,3 +1,19 @@
+## [1.1.0] -2020/8/14
+* refactor: Adjust the directory structure
+* feat(get_arch_core) : export dartz, show Tuple2, Tuple3
+* feat(extension.dart):
+    Either<L, R>:
+        leftOrNull() for getting Left;
+        rightOrElse()
+        fold<R>((l) => onLeft?.call(l), id);
+        safeFold<B>(B onLeft(L l), B onRight(R r), {B onNull()})
+
+    Future<Either<L, R>>:
+       asyncLeftOrNull() for getting Left asynchronously ;
+       asyncMap() for asynchronous mapping;
+       asyncSafeFold<B>()
+* feat(i_failure.dart):
+    Failure.auto() add [String msg] param;
 ## [1.0.0] - 2020/7/31
 * add : LiveData, LiveModel
 * add : "IGetArchPackage.interfaceImplRegisterStatus"

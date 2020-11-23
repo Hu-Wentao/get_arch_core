@@ -1,23 +1,8 @@
-import 'package:get_arch_core/application/i_repo.dart';
 import 'package:get_arch_core/application/i_usecase.dart';
 import 'package:get_arch_core/get_arch_core.dart';
 import 'package:injectable/injectable.dart';
 import 'package:simple/domain.dart';
 
-///
-/// <3> IRepository
-
-///
-/// 3.1 编写IRepo, 此时用例需要做一些CRUD操作, 那么就直接继承[ICrudRepository]吧
-///   抽象父类的两个泛型分别代表 Entity类型, Entity实例的id的类型,
-///   如果Entity在定义的时候没有指定Id的类型, 那么这里会报错
-/// 3.2 这里添加无需[lazySingleton]注解, 因为这个类是抽象类, 无法获得实例
-///   应当在该类的实现类上添加注解, 并且将注解类型标记为[IItemRepo],
-///   例如[ItemRepoImpl]
-abstract class IItemRepo extends ICrudRepository<Item, String> {
-  Future<Either<Failure, List<Item>>> readAll();
-  Stream<Either<Failure, List<Item>>> observeAll();
-}
 
 ///
 /// <4> UseCase

@@ -21,14 +21,14 @@ abstract class IGetArchPackage {
       await initPackage(env);
       await initPackageDI(env);
     } catch (e, s) {
-      print('${this.runtimeType}.init ### Error: [\n$e\n]\nStackTrace[\n$s\n]');
+      print('[${this.runtimeType}].init ### Error: [\n$e\n]\nStackTrace[\n$s\n]');
     }
   }
 
   // 起止行4个空格,信息内容行6个空格
   void _printConf(EnvConfig config) {
-    final start = '\t╠╬══╝ [${this.runtimeType}] Config Profile ╚══════\n';
-    final endLn = '\t╚╚═══ [${this.runtimeType}] Config  Loaded ═══════';
+    final start = '\n\t╠╬══╝ [${this.runtimeType}] Config Profile ╚══════\n';
+    final endLn = '\t╚╚═══ [${this.runtimeType}] Config  Loaded ═══════\n';
     StringBuffer bf = interfaceImplRegisterStatus?.entries?.fold<StringBuffer>(
         StringBuffer(),
         (pre, kv) => pre

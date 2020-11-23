@@ -19,6 +19,6 @@ main() {
   });
 
   test('get EnvSign from String ', () {
-    expect(EnvSign.fromString('dev'), EnvSign.dev);
+    expect(EnvSign.values.fromString('dev'), EnvSign.dev);
   });
 }

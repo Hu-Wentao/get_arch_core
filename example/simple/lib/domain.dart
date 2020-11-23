@@ -26,3 +26,20 @@ class Item extends IEntity<String> {
 /// <2> Failure
 /// 2.1 每一个App都会有与业务逻辑对应的Failure
 /// (在get_arch_quick_start中, 已预设一些常用Failure)
+
+
+
+///
+/// <3> IRepository
+
+///
+/// 3.1 编写IRepo, 此时用例需要做一些CRUD操作, 那么就直接继承[ICrudRepository]吧
+///   抽象父类的两个泛型分别代表 Entity类型, Entity实例的id的类型,
+///   如果Entity在定义的时候没有指定Id的类型, 那么这里会报错
+/// 3.2 这里添加无需[lazySingleton]注解, 因为这个类是抽象类, 无法获得实例
+///   应当在该类的实现类上添加注解, 并且将注解类型标记为[IItemRepo],
+///   例如[ItemRepoImpl]
+abstract class IItemRepo extends ICrudRepository<Item, String> {
+  Future<Either<Failure, List<Item>>> readAll();
+  Stream<Either<Failure, List<Item>>> observeAll();
+}

@@ -6,7 +6,10 @@
 import 'package:get_arch_core/get_arch_core.dart';
 
 /// 仓库抽象类
-abstract class IRepository<E extends IEntity<IdTp>, IdTp> {}
+abstract class IRepository<E extends IEntity<IdTp>, IdTp> {
+  /// 返回Entity的类型
+  Type get entityType => E.runtimeType;
+}
 
 /// 增删改查
 /// 这不代表继承本类的Repo实现有且仅有以下方法
