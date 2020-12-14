@@ -24,7 +24,7 @@ Future<void> main() async {
 }
 ```
 
-## Complete project structure:
+## Complete project structure
 
 ```text
 lib
@@ -63,7 +63,7 @@ lib
 
 ![GetArch Universe](GetArchUniverse.png)
 
-# 版本指南
+## 版本指南
 
 > 版本号规则:
 >

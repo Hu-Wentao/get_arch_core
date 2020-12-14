@@ -1,7 +1,6 @@
 import 'package:dartz/dartz.dart';
 import 'package:get_arch_core/domain/i_failure.dart';
 import 'package:injectable/injectable.dart';
-import 'package:simple/application.dart';
 import 'package:simple/domain.dart';
 import 'package:rxdart/rxdart.dart';
 

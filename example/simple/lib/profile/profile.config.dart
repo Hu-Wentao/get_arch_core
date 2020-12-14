@@ -5,7 +5,7 @@
 // **************************************************************************
 
 import 'package:get_it/get_it.dart';
-import 'package:injectable/injectable.dart';
+import 'package:injectable/get_it_helper.dart';
 import 'package:simple/application.dart';
 import 'package:simple/infrastructure/data_source_impl.dart';
 import 'package:simple/interface.dart';
