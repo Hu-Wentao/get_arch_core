@@ -3,17 +3,18 @@
 // Date  : 2020/7/24
 // Time  : 19:07
 
+import 'package:get_arch_core/domain/value_objects.dart';
 import 'package:get_arch_core/get_arch_core.dart';
 
 /// 仓库抽象类
-abstract class IRepository<E extends IEntity<IdTp>, IdTp> {
+abstract class IRepository<E extends IAggregate<IdTp>, IdTp extends Identity> {
   /// 返回Entity的类型
   Type get entityType => E.runtimeType;
 }
 
 /// 增删改查
 /// 这不代表继承本类的Repo实现有且仅有以下方法
-abstract class ICrudRepo<E extends IEntity<IdTp>, IdTp>
+abstract class ICrudRepo<E extends IAggregate<IdTp>, IdTp extends Identity>
     extends IRepository<E, IdTp> {
   /// 增
   /// (当数据通过网络同步后, 返回值不一定与输入值相同, 因此这里的返回值不是[Unit]类型)
@@ -30,7 +31,7 @@ abstract class ICrudRepo<E extends IEntity<IdTp>, IdTp>
   Future delete(IdTp id);
 }
 
-abstract class ICrudRepository<E extends IEntity<IdTp>, IdTp>
+abstract class ICrudRepository<E extends IAggregate<IdTp>, IdTp extends Identity>
     extends IRepository<E, IdTp> {
   /// 增
   /// (当数据通过网络同步后, 返回值不一定与输入值相同, 因此这里的返回值不是[Unit]类型)
