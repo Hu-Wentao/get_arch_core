@@ -4,16 +4,15 @@ import 'validators.dart';
 
 /// VO is immutable
 /// 包含值验证逻辑, 一般放置在构造方法内
-
-abstract class VO extends Equatable {
-  const VO();
+abstract class IValueObject extends Equatable {
+  const IValueObject();
 
   @override
   final bool stringify = true;
 }
 
 /// 针对只包装了一个字段的VO
-class MonoVO<T> extends VO {
+class MonoVO<T> extends IValueObject {
   final T value;
 
   const MonoVO.build(this.value);
