@@ -1,4 +1,4 @@
-import 'package:get_arch_core/domain/i_entity.dart';
+import 'package:get_arch_core/domain/entity.dart';
 import 'package:get_arch_core/get_arch_core.dart';
 
 ///

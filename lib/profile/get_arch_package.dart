@@ -3,8 +3,9 @@
 // Date  : 2020/7/3
 // Time  : 23:46
 
-import 'package:get_arch_core/domain/env_config.dart';
 import 'package:meta/meta.dart';
+
+import 'env_config.dart';
 
 ///
 /// All GetArch packages must implement this class
@@ -21,7 +22,8 @@ abstract class IGetArchPackage {
       await initPackage(env);
       await initPackageDI(env);
     } catch (e, s) {
-      print('[${this.runtimeType}].init ### Error: [\n$e\n]\nStackTrace[\n$s\n]');
+      print(
+          '[${this.runtimeType}].init ### Error: [\n$e\n]\nStackTrace[\n$s\n]');
     }
   }
 
@@ -55,8 +57,10 @@ abstract class IGetArchPackage {
 
   // 打印其他类型的Package配置信息
   Map<String, String> printOtherStateWithEnvConfig(EnvConfig config);
+
   // 初始化包
   Future<void> initPackage(EnvConfig config);
+
   // 初始化包依赖注入
   Future<void> initPackageDI(EnvConfig config);
 }

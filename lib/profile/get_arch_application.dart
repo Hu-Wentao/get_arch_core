@@ -3,10 +3,11 @@
 // Date  : 2020/6/17
 // Time  : 0:17
 
-import 'package:get_arch_core/domain/env_config.dart';
-import 'package:get_arch_core/get_arch_core.dart';
+import 'package:get_it/get_it.dart';
+import 'package:meta/meta.dart';
 
-import 'i_get_arch_package.dart';
+import 'env_config.dart';
+import 'get_arch_package.dart';
 
 /// App运行
 /// 在main()中,必须先执行 WidgetsFlutterBinding.ensureInitialized();
@@ -33,6 +34,7 @@ class GetArchApplication {
 
 ''';
   static const _endInfo = '\t═════ All the configuration are loaded ════════';
+
   static Future run(
     EnvConfig masterEnv, {
     bool printConfig: true,

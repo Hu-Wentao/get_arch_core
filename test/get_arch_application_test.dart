@@ -3,7 +3,7 @@
 // Date  : 2020/6/20
 // Time  : 1:13
 
-import 'package:get_arch_core/domain/env_config.dart';
+import 'package:get_arch_core/profile/env_config.dart';
 import 'package:get_arch_core/profile/get_arch_application.dart';
 import 'package:test/test.dart';
 
