@@ -4,10 +4,12 @@ export 'gac_base.dart';
 
 export 'domain/i_entity.dart';
 export 'domain/i_repo.dart';
-export 'domain/i_failure.dart';
+export 'domain/value_objects.dart';
+export 'domain/exceptions.dart';
 export 'domain/env_config.dart';
 
 export 'application/i_usecase.dart';
+export 'application/i_failure.dart';
 
 export 'interface/i_dto.dart';
 

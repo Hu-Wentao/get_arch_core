@@ -4,4 +4,5 @@ export 'package:dartz/dartz.dart'
     show Either, Unit, left, right, Left, Right, Tuple2, Tuple3;
 export 'package:rxdart/rxdart.dart';
 export 'package:meta/meta.dart';
+export 'domain/validators.dart';
 export 'domain/extensions.dart';
