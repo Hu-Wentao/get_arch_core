@@ -3,11 +3,9 @@
 // Date  : 2020/3/24
 // Time  : 8:31
 
-import 'package:equatable/equatable.dart';
+import 'package:get_arch_core/domain/value_objects.dart';
 
 /// 实体类实现本接口
-abstract class IEntity<IdTp> extends Equatable {
+abstract class IEntity<IdTp extends Identity> {
   IdTp get id;
-
-  final bool stringify = true;
 }
