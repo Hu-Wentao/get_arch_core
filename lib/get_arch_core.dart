@@ -3,6 +3,7 @@ library get_arch_core;
 export 'gac_base.dart';
 
 export 'domain/i_entity.dart';
+export 'domain/i_factory.dart';
 export 'domain/i_repo.dart';
 export 'domain/value_objects.dart';
 export 'domain/exceptions.dart';
