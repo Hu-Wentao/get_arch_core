@@ -30,6 +30,7 @@ abstract class ICrudRepo<E extends IEntity<IdTp>, IdTp>
   Future delete(IdTp id);
 }
 
+@Deprecated("不再推荐Repo内方法返回 Future类型")
 abstract class ICrudRepository<E extends IEntity<IdTp>, IdTp>
     extends IRepository<E, IdTp> {
   /// 增
