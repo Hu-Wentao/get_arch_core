@@ -3,8 +3,8 @@
 // Date  : 2020/8/3
 // Time  : 16:22
 
+import 'package:flutter_test/flutter_test.dart';
 import 'package:get_arch_core/get_arch_core.dart';
-import 'package:test/test.dart';
 
 main() {
   test('EitherX', () {

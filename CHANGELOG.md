@@ -1,5 +1,10 @@
 # ChangeLog
 
+## [1.2.0+1] -2021/2/20
+
+- remove: 移除example, 此后示例将集成到 get_arch_quick_start 中
+- refactor: 更换test依赖
+
 ## [1.2.0] -2021/2/20
 
 - 3: `repo.dart`新增`ICrudRepo`类, 不推荐在Repo中使用`Either`

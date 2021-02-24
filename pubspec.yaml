@@ -13,4 +13,7 @@ dependencies:
   dartz: ">=0.9.0 <0.10.0"
   equatable: ">=1.2.0 <1.3.0"
 
+dev_dependencies:
+  flutter_test:
+    sdk: flutter
 flutter:
