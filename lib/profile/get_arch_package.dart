@@ -21,7 +21,8 @@ abstract class IGetArchPackage {
       await initPackage(env);
       await initPackageDI(env);
     } catch (e, s) {
-      print('[${this.runtimeType}].init ### Error: [\n$e\n]\nStackTrace[\n$s\n]');
+      print(
+          '[${this.runtimeType}].init ### Error: [\n$e\n]\nStackTrace[\n$s\n]');
     }
   }
 
@@ -46,12 +47,6 @@ abstract class IGetArchPackage {
   // 打印Package内接口实现的开关状态
   @protected
   Map<Type, bool> get interfaceImplRegisterStatus;
-
-  @Deprecated(
-      'IGetArchPackage.printBoolStateWithRegTypeName # has been deprecated >0.6.1\n'
-      'Please use [interfaceImplRegisterStatus]\n'
-      'this method will remove >2.0.0')
-  Map<String, bool> get printBoolStateWithRegTypeName => null;
 
   // 打印其他类型的Package配置信息
   Map<String, String> printOtherStateWithEnvConfig(EnvConfig config);

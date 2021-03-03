@@ -6,7 +6,7 @@
 import 'package:get_arch_core/domain/env_config.dart';
 import 'package:get_arch_core/get_arch_core.dart';
 
-import 'i_get_arch_package.dart';
+import 'get_arch_package.dart';
 
 /// App运行
 /// 在main()中,必须先执行 WidgetsFlutterBinding.ensureInitialized();
@@ -23,14 +23,13 @@ import 'i_get_arch_package.dart';
 /// [packages] 其他实现了[IGetArchPackage]的类
 /// [mockDI] 该函数提供了一个 GetIt实例参数, 用于在单元测试中注册用于调试的依赖
 class GetArchApplication {
-  static const logo = r'''
+  static logo({String version}) => r'''
        _____      _                       _     
       / ____|    | |       /\            | |    
      | |  __  ___| |_     /  \   _ __ ___| |__  
      | | |_ |/ _ \ __|   / /\ \ | '__/ __| '_ \ 
      | |__| |  __/ |_   / ____ \| | | (__| | | |
-      \_____|\___|\__| /_/    \_\_|  \___|_| |_|
-
+      \_____|\___|\__| /_/    \_\_|  \___|_| |_|    $version
 ''';
   static const _endInfo = '\t═════ All the configuration are loaded ════════';
   static Future run(
@@ -40,7 +39,7 @@ class GetArchApplication {
     Future<void> Function(GetIt g) mockDI,
   }) async {
     try {
-      print(logo);
+      print(logo());
       await GetArchCorePackage().init(masterEnv, printConfig);
       await mockDI?.call(GetIt.I);
       if (packages != null)
