@@ -5,7 +5,9 @@
 
 import 'package:get_arch_core/get_arch_core.dart';
 
+///
 /// 仓库抽象类
+/// 建议缩写为: Repo
 abstract class IRepository<Ag extends IAggregate<Id>, Id extends Identity> {
   // 返回Entity的类型
   Type get entityType => Ag.runtimeType;

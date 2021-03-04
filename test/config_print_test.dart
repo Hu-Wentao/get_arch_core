@@ -4,7 +4,6 @@
 // Time  : 11:01
 
 import 'package:flutter_test/flutter_test.dart';
-import 'package:get_arch_core/domain/env_config.dart';
 import 'package:get_arch_core/get_arch_core.dart';
 import 'package:get_arch_core/profile/get_arch_application.dart';
 import 'package:get_arch_core/profile/get_arch_package.dart';

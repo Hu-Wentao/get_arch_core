@@ -3,8 +3,7 @@
 // Date  : 2020/7/3
 // Time  : 23:46
 
-import 'package:get_arch_core/domain/env_config.dart';
-import 'package:meta/meta.dart';
+import 'package:get_arch_core/get_arch_core.dart';
 
 ///
 /// All GetArch packages must implement this class
