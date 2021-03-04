@@ -4,8 +4,7 @@
 // Time  : 1:13
 
 import 'package:flutter_test/flutter_test.dart';
-import 'package:get_arch_core/domain/env_config.dart';
-import 'package:get_arch_core/profile/get_arch_application.dart';
+import 'package:get_arch_core/get_arch_core.dart';
 
 main() {
   test('show printPackageConfigInfo', () {
