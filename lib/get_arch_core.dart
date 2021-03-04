@@ -2,13 +2,15 @@ library get_arch_core;
 
 export 'gac_base.dart';
 
-export 'application/appliction_service.dart';
-
+export 'domain/value_object.dart';
 export 'domain/entity.dart';
+export 'domain/aggregate.dart';
 export 'domain/repository.dart';
 export 'domain/failure.dart';
 export 'domain/env_config.dart';
 export 'domain/extension.dart';
+
+export 'application/appliction_service.dart';
 
 export 'interface/dto.dart';
 
