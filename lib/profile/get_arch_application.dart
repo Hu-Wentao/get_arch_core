@@ -22,7 +22,7 @@ import 'get_arch_package.dart';
 /// [packages] 其他实现了[IGetArchPackage]的类
 /// [mockDI] 该函数提供了一个 GetIt实例参数, 用于在单元测试中注册用于调试的依赖
 class GetArchApplication {
-  static logo({String version}) => r'''
+  static logo({String version}) => r'''\n
        _____      _                       _     
       / ____|    | |       /\            | |    
      | |  __  ___| |_     /  \   _ __ ___| |__  
