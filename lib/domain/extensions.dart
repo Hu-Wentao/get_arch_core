@@ -4,6 +4,12 @@
 // Time  : 9:34
 import 'package:dartz/dartz.dart';
 
+extension CompareX on num {
+  num bigger(num v) => (this > v) ? this : v;
+
+  num smaller(num v) => (this < v) ? this : v;
+}
+
 extension IntToHexX on int {
   String get hexVal => '(0x)${this.toRadixString(16)}';
 }

@@ -7,7 +7,9 @@ export 'domain/entity.dart';
 export 'domain/aggregate.dart';
 export 'domain/repository.dart';
 export 'domain/failure.dart';
-export 'domain/extension.dart';
+export 'domain/extensions.dart';
+export 'domain/exceptions.dart';
+export 'domain/validators.dart';
 
 export 'application/appliction_service.dart';
 

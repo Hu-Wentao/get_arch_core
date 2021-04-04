@@ -7,8 +7,6 @@ import 'package:get_arch_core/get_arch_core.dart';
 
 ///
 /// 实体类实现本接口
-abstract class IEntity<Id extends Identity> extends Equatable {
+abstract class IEntity<Id extends Identity> {
   Id get id;
-
-  final bool stringify = true;
 }
