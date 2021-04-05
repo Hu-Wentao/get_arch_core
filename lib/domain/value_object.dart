@@ -28,7 +28,7 @@ class MonoVO<T> extends ValueObject {
   }
 
   @override
-  List<Object> get props => [value];
+  List<Object?> get props => [value];
 }
 
 class Identity<T> extends MonoVO<T> {

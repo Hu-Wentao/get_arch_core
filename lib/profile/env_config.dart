@@ -12,9 +12,9 @@ import 'package:equatable/equatable.dart';
 /// [packTime] 打包发布的时间
 /// [envSign] 用于DI的注入配置,可以设为 "dev","test","prod"等
 class EnvConfig extends Equatable {
-  final String appName;
-  final String libVersion;
-  final DateTime packTime;
+  final String? appName;
+  final String? libVersion;
+  final DateTime? packTime;
   final EnvSign envSign;
 
   const EnvConfig(this.appName,
@@ -33,7 +33,7 @@ class EnvConfig extends Equatable {
         this.packTime = null;
 
   @override
-  List<Object> get props => [appName, libVersion, packTime, envSign];
+  List<Object?> get props => [appName, libVersion, packTime, envSign];
   @override
   final bool stringify = true;
 }

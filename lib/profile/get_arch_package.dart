@@ -9,13 +9,13 @@ import 'package:get_arch_core/get_arch_core.dart';
 /// All GetArch packages must implement this class
 /// 所有的GetArch包都必须实现本类
 abstract class IGetArchPackage {
-  final EnvConfig pkgEnv;
+  final EnvConfig? pkgEnv;
 
   IGetArchPackage(this.pkgEnv);
 
-  Future<void> init(EnvConfig masterEnv, bool printConfig) async {
+  Future<void> init(EnvConfig? masterEnv, bool printConfig) async {
     final env = pkgEnv ?? masterEnv;
-    if (printConfig ?? true) _printConf(env);
+    if (printConfig) _printConf(env);
     try {
       await initPackage(env);
       await initPackageDI(env);
@@ -26,17 +26,19 @@ abstract class IGetArchPackage {
   }
 
   // 起止行4个空格,信息内容行6个空格
-  void _printConf(EnvConfig config) {
+  void _printConf(EnvConfig? config) {
     final start = '\n\t╠╬══╝ [${this.runtimeType}] Config Profile ╚══════\n';
     final endLn = '\t╚╚═══ [${this.runtimeType}] Config  Loaded ═══════\n';
-    StringBuffer bf = interfaceImplRegisterStatus?.entries?.fold<StringBuffer>(
+    StringBuffer? bf = interfaceImplRegisterStatus?.entries.fold<StringBuffer>(
         StringBuffer(),
         (pre, kv) => pre
           ..writeln(
-              '\t  <${kv.key}>Implement: ${kv.value == null ? "ERROR! Please check package's EnvConfig !" : kv.value ? 'ON' : 'OFF'}'));
-    bf = printOtherStateWithEnvConfig(config)?.entries?.fold(
+              '\t  <${kv.key}>Implement: ${kv.value == null ? "ERROR! Please check package's EnvConfig !" : kv.value! ? 'ON' : 'OFF'}'));
+    bf = printOtherStateWithEnvConfig(config)?.entries.fold(
             (bf ?? StringBuffer()),
-            (pre, kv) => pre..writeln('\t  ${kv.key} : ${kv.value}')) ??
+            ((pre, kv) => pre..writeln('\t  ${kv.key} : ${kv.value}'))
+                as StringBuffer? Function(
+                    StringBuffer?, MapEntry<String, String>)) ??
         bf;
 
     print(start);
@@ -45,12 +47,12 @@ abstract class IGetArchPackage {
 
   // 打印Package内接口实现的开关状态
   @protected
-  Map<Type, bool> get interfaceImplRegisterStatus;
+  Map<Type, bool?>? get interfaceImplRegisterStatus;
 
   // 打印其他类型的Package配置信息
-  Map<String, String> printOtherStateWithEnvConfig(EnvConfig config);
+  Map<String, String>? printOtherStateWithEnvConfig(EnvConfig? config);
   // 初始化包
-  Future<void> initPackage(EnvConfig config);
+  Future<void>? initPackage(EnvConfig? config);
   // 初始化包依赖注入
-  Future<void> initPackageDI(EnvConfig config);
+  Future<void>? initPackageDI(EnvConfig? config);
 }

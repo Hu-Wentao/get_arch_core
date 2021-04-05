@@ -16,7 +16,7 @@ abstract class Failure extends Equatable {
   }
 
   /// 自动包装
-  factory Failure.auto(dynamic e, [dynamic stackTrace, String msg]) =>
+  factory Failure.auto(dynamic e, [dynamic stackTrace, String? msg]) =>
       e is Failure ? e : UnknownFailure('$msg[$e]', stackTrace);
 
   @override

@@ -22,7 +22,7 @@ import 'get_arch_package.dart';
 /// [packages] 其他实现了[IGetArchPackage]的类
 /// [mockDI] 该函数提供了一个 GetIt实例参数, 用于在单元测试中注册用于调试的依赖
 class GetArchApplication {
-  static logo({String version}) => r'''\n
+  static logo({String? version}) => r'''\n
        _____      _                       _     
       / ____|    | |       /\            | |    
      | |  __  ___| |_     /  \   _ __ ___| |__  
@@ -32,10 +32,10 @@ class GetArchApplication {
 ''';
   static const _endInfo = '\t═════ All the configuration are loaded ════════';
   static Future run(
-    EnvConfig masterEnv, {
+    EnvConfig? masterEnv, {
     bool printConfig: true,
-    @required List<IGetArchPackage> packages,
-    Future<void> Function(GetIt g) mockDI,
+    required List<IGetArchPackage> packages,
+    Future<void> Function(GetIt g)? mockDI,
   }) async {
     try {
       print(logo());
@@ -55,14 +55,14 @@ class GetArchCorePackage extends IGetArchPackage {
   GetArchCorePackage() : super(null);
 
   @override
-  Future<void> initPackage(EnvConfig config) => null;
+  Future<void>? initPackage(EnvConfig? config) => null;
 
   @override
-  Future<void> initPackageDI(EnvConfig config) async =>
-      GetIt.I.registerSingleton<EnvConfig>(config);
+  Future<void> initPackageDI(EnvConfig? config) async =>
+      GetIt.I.registerSingleton<EnvConfig>(config!);
 
   @override
-  Map<String, String> printOtherStateWithEnvConfig(EnvConfig config) => {
+  Map<String, String> printOtherStateWithEnvConfig(EnvConfig? config) => {
         'App Name   ': '${config?.appName}',
         'Lib Version': '${config?.libVersion}',
         'Pack Time  ': '${config?.packTime}',
@@ -70,7 +70,7 @@ class GetArchCorePackage extends IGetArchPackage {
       };
 
   @override
-  Map<Type, bool> get interfaceImplRegisterStatus => null;
+  Map<Type, bool>? get interfaceImplRegisterStatus => null;
 }
 
 // 可以通过如下代码来自动生成注册代码
