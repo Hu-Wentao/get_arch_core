@@ -32,9 +32,9 @@ class GetArchApplication {
 ''';
   static const _endInfo = '\t═════ All the configuration are loaded ════════';
   static Future run(
-    EnvConfig? masterEnv, {
+    EnvConfig masterEnv, {
     bool printConfig: true,
-    required List<IGetArchPackage> packages,
+    required List<IGetArchPackage>? packages,
     Future<void> Function(GetIt g)? mockDI,
   }) async {
     try {

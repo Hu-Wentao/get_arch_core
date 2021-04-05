@@ -55,11 +55,4 @@ main() {
           _TestConfigPackage(null), // 不作配置, (一般将配置选择设为可选参数)
         ]);
   });
-
-  test('_print null all conf', () {
-    GetArchApplication.run(null, packages: [
-      // 不配置环境
-      _TestConfigPackage(null),
-    ]);
-  });
 }

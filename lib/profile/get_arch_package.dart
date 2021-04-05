@@ -13,8 +13,8 @@ abstract class IGetArchPackage {
 
   IGetArchPackage(this.pkgEnv);
 
-  Future<void> init(EnvConfig? masterEnv, bool printConfig) async {
-    final env = pkgEnv ?? masterEnv;
+  Future<void> init(EnvConfig masterEnv, bool printConfig) async {
+    final EnvConfig env = pkgEnv ?? masterEnv;
     if (printConfig) _printConf(env);
     try {
       await initPackage(env);
@@ -26,7 +26,7 @@ abstract class IGetArchPackage {
   }
 
   // 起止行4个空格,信息内容行6个空格
-  void _printConf(EnvConfig? config) {
+  void _printConf(EnvConfig config) {
     final start = '\n\t╠╬══╝ [${this.runtimeType}] Config Profile ╚══════\n';
     final endLn = '\t╚╚═══ [${this.runtimeType}] Config  Loaded ═══════\n';
     StringBuffer? bf = interfaceImplRegisterStatus?.entries.fold<StringBuffer>(
@@ -50,9 +50,9 @@ abstract class IGetArchPackage {
   Map<Type, bool?>? get interfaceImplRegisterStatus;
 
   // 打印其他类型的Package配置信息
-  Map<String, String>? printOtherStateWithEnvConfig(EnvConfig? config);
+  Map<String, String>? printOtherStateWithEnvConfig(EnvConfig config);
   // 初始化包
-  Future<void>? initPackage(EnvConfig? config);
+  Future<void>? initPackage(EnvConfig config);
   // 初始化包依赖注入
-  Future<void>? initPackageDI(EnvConfig? config);
+  Future<void>? initPackageDI(EnvConfig config);
 }
