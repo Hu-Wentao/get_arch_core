@@ -34,11 +34,9 @@ abstract class IGetArchPackage {
         (pre, kv) => pre
           ..writeln(
               '\t  <${kv.key}>Implement: ${kv.value == null ? "ERROR! Please check package's EnvConfig !" : kv.value! ? 'ON' : 'OFF'}'));
-    bf = printOtherStateWithEnvConfig(config)?.entries.fold(
-            (bf ?? StringBuffer()),
-            ((pre, kv) => pre..writeln('\t  ${kv.key} : ${kv.value}'))
-                as StringBuffer? Function(
-                    StringBuffer?, MapEntry<String, String>)) ??
+    bf = printOtherStateWithEnvConfig(config)?.entries.fold<StringBuffer?>(
+            bf ?? StringBuffer(),
+            (pre, kv) => pre?..writeln('\t  ${kv.key} : ${kv.value}')) ??
         bf;
 
     print(start);
