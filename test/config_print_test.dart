@@ -16,7 +16,8 @@ class _TestConfigPackage extends IGetArchPackage {
   Future<void>? initPackage(EnvConfig? config) => null;
 
   @override
-  Future<void>? initPackageDI(EnvConfig config, {GetItHelper? gh}) => null;
+  Future<void>? initPackageDI(EnvConfig config, {EnvironmentFilter? filter}) =>
+      null;
 
   /// 这里将本参数设为 final,并通过构造函数赋值, 只是为了测试
   /// 实际项目中, 该参数绝对不允许通过构造函数赋值,而是应当在本类中定义好.

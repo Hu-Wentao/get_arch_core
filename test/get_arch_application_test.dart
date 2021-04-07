@@ -11,7 +11,7 @@ main() {
     GetArchCorePackage().init(
         EnvConfig('Test GetArch', '0.0.1', DateTime(2020, 6, 20), EnvSign.dev),
         true,
-        GetItHelper(GetIt.I));
+        null);
   });
 
   test('show EnvSign value', () {

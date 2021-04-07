@@ -14,13 +14,20 @@ abstract class IGetArchPackage {
 
   IGetArchPackage(this.pkgEnv);
 
+  ///
+  /// [masterEnv] 主环境, 必填
+  /// [printConfig] 是否打印相关日志
+  /// [filter] 根据主环境标志,选择性注入依赖
+  ///   如果项目中只有一个 [GetArchPackage] 则可以为空
+  ///   如果项目中有多个 [GetArchPackage] 则只有首个开始注入的[GetArchPackage]可以为空
+  ///     否则将导致异常抛出,注入失败
   Future<void> init(
-      EnvConfig masterEnv, bool printConfig, GetItHelper gh) async {
+      EnvConfig masterEnv, bool printConfig, EnvironmentFilter? filter) async {
     final EnvConfig env = pkgEnv ?? masterEnv;
     if (printConfig) _printConf(env);
     try {
       await initPackage(env);
-      await initPackageDI(env, gh: gh);
+      await initPackageDI(env, filter: filter);
     } catch (e, s) {
       print(
           '[${this.runtimeType}].init ### Error: [\n$e\n]\nStackTrace[\n$s\n]');
@@ -58,5 +65,5 @@ abstract class IGetArchPackage {
   /// 初始化包依赖注入
   /// 如果一个项目中同时使用了多个[IGetArchPackage],则务必使用 [gh]参数
   /// 因为同一个项目, 只能有唯一的[gh], 否则会导致DI失败
-  Future<void>? initPackageDI(EnvConfig config, {GetItHelper? gh});
+  Future<void>? initPackageDI(EnvConfig config, {EnvironmentFilter? filter});
 }

@@ -4,6 +4,7 @@
 // Time  : 0:17
 
 import 'package:get_arch_core/get_arch_core.dart';
+import 'package:injectable/injectable.dart';
 
 import 'get_arch_package.dart';
 
@@ -39,11 +40,12 @@ class GetArchApplication {
   }) async {
     try {
       print(logo());
-      final gh = GetItHelper(GetIt.I, masterEnv.envSign.inString);
-      await GetArchCorePackage().init(masterEnv, printConfig, gh);
+      final filter = NoEnvOrContains(masterEnv.envSign.inString);
+      await GetArchCorePackage().init(masterEnv, printConfig, filter);
       await mockDI?.call(GetIt.I);
       if (packages != null)
-        for (final pkg in packages) await pkg.init(masterEnv, printConfig, gh);
+        for (final pkg in packages)
+          await pkg.init(masterEnv, printConfig, filter);
       print(_endInfo);
     } catch (e, s) {
       print('GetArchApplication.run #### Init Error: [$e]\nStackTrace[\n$s\n]');
@@ -59,11 +61,10 @@ class GetArchCorePackage extends IGetArchPackage {
   Future<void>? initPackage(EnvConfig? config) => null;
 
   @override
-  // Future<void> initPackageDI(EnvConfig? config) async =>
-  Future<void> initPackageDI(EnvConfig config, {GetItHelper? gh}) async =>
-      gh != null
-          ? gh.singleton<EnvConfig>(config)
-          : GetIt.I.registerSingleton<EnvConfig>(config);
+  Future<void>? initPackageDI(EnvConfig config,
+          {EnvironmentFilter? filter}) async =>
+      GetItHelper(GetIt.I, config.envSign.inString, filter)
+          .singleton<EnvConfig>(config);
 
   @override
   Map<String, String> printOtherStateWithEnvConfig(EnvConfig? config) => {
