@@ -1,6 +1,6 @@
 name: get_arch_core
 description: flutter architecture package, Inspired by Explicit Architecture, Clean Architectures, DDD,
-version: 2.1.0-nullsafety.3
+version: 2.2.0
 homepage: https://github.com/Hu-Wentao/get_arch_core
 
 environment:
@@ -12,6 +12,7 @@ dependencies:
   rxdart: ^0.26.0
   dartz: ^0.10.0-nullsafety.1
   equatable: ^2.0.0
+  injectable: ^1.2.2
 
 dev_dependencies:
   flutter_test:

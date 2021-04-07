@@ -39,10 +39,11 @@ class GetArchApplication {
   }) async {
     try {
       print(logo());
-      await GetArchCorePackage().init(masterEnv, printConfig);
+      final gh = GetItHelper(GetIt.I, masterEnv.envSign.inString);
+      await GetArchCorePackage().init(masterEnv, printConfig, gh);
       await mockDI?.call(GetIt.I);
       if (packages != null)
-        for (final pkg in packages) await pkg.init(masterEnv, printConfig);
+        for (final pkg in packages) await pkg.init(masterEnv, printConfig, gh);
       print(_endInfo);
     } catch (e, s) {
       print('GetArchApplication.run #### Init Error: [$e]\nStackTrace[\n$s\n]');
@@ -58,8 +59,11 @@ class GetArchCorePackage extends IGetArchPackage {
   Future<void>? initPackage(EnvConfig? config) => null;
 
   @override
-  Future<void> initPackageDI(EnvConfig? config) async =>
-      GetIt.I.registerSingleton<EnvConfig>(config!);
+  // Future<void> initPackageDI(EnvConfig? config) async =>
+  Future<void> initPackageDI(EnvConfig config, {GetItHelper? gh}) async =>
+      gh != null
+          ? gh.singleton<EnvConfig>(config)
+          : GetIt.I.registerSingleton<EnvConfig>(config);
 
   @override
   Map<String, String> printOtherStateWithEnvConfig(EnvConfig? config) => {

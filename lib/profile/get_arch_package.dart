@@ -4,6 +4,7 @@
 // Time  : 23:46
 
 import 'package:get_arch_core/get_arch_core.dart';
+import 'package:injectable/injectable.dart';
 
 ///
 /// All GetArch packages must implement this class
@@ -13,12 +14,13 @@ abstract class IGetArchPackage {
 
   IGetArchPackage(this.pkgEnv);
 
-  Future<void> init(EnvConfig masterEnv, bool printConfig) async {
+  Future<void> init(
+      EnvConfig masterEnv, bool printConfig, GetItHelper gh) async {
     final EnvConfig env = pkgEnv ?? masterEnv;
     if (printConfig) _printConf(env);
     try {
       await initPackage(env);
-      await initPackageDI(env);
+      await initPackageDI(env, gh: gh);
     } catch (e, s) {
       print(
           '[${this.runtimeType}].init ### Error: [\n$e\n]\nStackTrace[\n$s\n]');
@@ -47,10 +49,14 @@ abstract class IGetArchPackage {
   @protected
   Map<Type, bool?>? get interfaceImplRegisterStatus;
 
-  // 打印其他类型的Package配置信息
+  /// 打印其他类型的Package配置信息
   Map<String, String>? printOtherStateWithEnvConfig(EnvConfig config);
-  // 初始化包
+
+  /// 初始化包
   Future<void>? initPackage(EnvConfig config);
-  // 初始化包依赖注入
-  Future<void>? initPackageDI(EnvConfig config);
+
+  /// 初始化包依赖注入
+  /// 如果一个项目中同时使用了多个[IGetArchPackage],则务必使用 [gh]参数
+  /// 因为同一个项目, 只能有唯一的[gh], 否则会导致DI失败
+  Future<void>? initPackageDI(EnvConfig config, {GetItHelper? gh});
 }
