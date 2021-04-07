@@ -41,6 +41,12 @@ class GetArchApplication {
     try {
       print(logo());
       final filter = NoEnvOrContains(masterEnv.envSign.inString);
+
+      // 预先注册环境标志, 防止多GetItHelper冲突
+      GetIt.I.registerSingleton<Set<String?>>(
+        filter.environments,
+        instanceName: kEnvironmentsName,
+      );
       await GetArchCorePackage().init(masterEnv, printConfig, filter);
       await mockDI?.call(GetIt.I);
       if (packages != null)
