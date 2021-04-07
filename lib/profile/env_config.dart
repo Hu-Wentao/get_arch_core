@@ -17,18 +17,19 @@ class EnvConfig extends Equatable {
   final DateTime? packTime;
   final EnvSign envSign;
 
-  const EnvConfig(this.appName,
-      this.libVersion,
-      this.packTime,
-      this.envSign,);
+  const EnvConfig(
+    this.appName,
+    this.libVersion,
+    this.packTime,
+    this.envSign,
+  );
 
   /// 使用本构造前, 请确保你不是新手
   ///
   /// 本构造适用于单独配置某一个仅使用EnvSign的GetArchPackage,
   /// 当然, 如果你的整个项目中都没有用到其他属性,也可以在globalConfig中使用本构造
   const EnvConfig.sign(this.envSign)
-      : assert(envSign != null),
-        this.appName = null,
+      : this.appName = null,
         this.libVersion = null,
         this.packTime = null;
 
@@ -45,7 +46,7 @@ enum EnvSign {
   prod,
 }
 
-extension EnvSignX on Iterable<EnvSign> {
+extension EnvSignValueX on Iterable<EnvSign> {
   static const _map = {
     'dev': EnvSign.dev,
     'test': EnvSign.test,
@@ -54,4 +55,8 @@ extension EnvSignX on Iterable<EnvSign> {
   };
 
   fromString(String sign) => _map[sign];
+}
+
+extension EnvSignX on EnvSign {
+  String get inString => this.toString().split('.').last;
 }
