@@ -46,11 +46,11 @@ class GetArchApplication {
       // 多GH冲突的原因可能就是 注册的是 <Set<String?> 可实际检测的却是<Set<String>>导致的
       // 单GH无法发现, 目前只能用预先注册的方式通过通过检测
       GetIt.I.registerSingleton<Set<String>>(
-        filter.environments as Set<String>,
+        filter.environments.map<String>((e) => e ?? '').toSet(),
         instanceName: kEnvironmentsName,
       );
       GetIt.I.registerSingleton<Set<String?>>(
-        filter.environments as Set<String>,
+        filter.environments,
         instanceName: kEnvironmentsName,
       );
       await GetArchCorePackage().init(masterEnv, printConfig, filter);
