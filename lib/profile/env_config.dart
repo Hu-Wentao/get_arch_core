@@ -4,6 +4,7 @@
 // Time  : 0:23
 
 import 'package:equatable/equatable.dart';
+import 'package:get_arch_core/get_arch_core.dart';
 
 ///
 /// App运行环境配置
@@ -11,7 +12,7 @@ import 'package:equatable/equatable.dart';
 /// [libVersion] 一般与app版本相同,用于热更新等场景
 /// [packTime] 打包发布的时间
 /// [envSign] 用于DI的注入配置,可以设为 "dev","test","prod"等
-class EnvConfig extends Equatable {
+class EnvConfig extends ValueObject {
   final String? appName;
   final String? libVersion;
   final DateTime? packTime;
@@ -23,6 +24,13 @@ class EnvConfig extends Equatable {
     this.packTime,
     this.envSign,
   );
+
+  const EnvConfig.build({
+    required this.appName,
+    required this.libVersion,
+    required this.packTime,
+    required this.envSign,
+  });
 
   /// 使用本构造前, 请确保你不是新手
   ///
