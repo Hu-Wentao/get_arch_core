@@ -1,10 +1,8 @@
-import 'package:meta/meta.dart';
-
 /// 值验证器
 abstract class Validator<T> {
   final String errorMsg;
 
-  Validator(this.errorMsg) : assert(errorMsg != null);
+  Validator(this.errorMsg);
 
   bool isValid(T value);
 
@@ -20,9 +18,7 @@ class MultiValidator extends Validator {
   @override
   String get errorMsg => _errorMsg;
 
-  MultiValidator(this.validators)
-      : assert(validators != null),
-        super('');
+  MultiValidator(this.validators) : super('');
 
   @override
   bool isValid(value) {

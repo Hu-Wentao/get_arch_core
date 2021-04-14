@@ -19,9 +19,7 @@ class MonoVO<T> extends ValueObject {
   const MonoVO.build(this.value);
 
   factory MonoVO(T value, Validator validator) {
-    if (validator == null) {
-      if (value == null) throw ValidationException('值对象不能为null');
-    } else if (!validator.isValid(value)) {
+    if (!validator.isValid(value)) {
       throw ValidationException(validator.errorMsg);
     }
     return MonoVO.build(value);

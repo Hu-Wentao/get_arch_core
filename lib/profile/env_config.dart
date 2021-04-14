@@ -3,7 +3,6 @@
 // Date  : 2020/6/17
 // Time  : 0:23
 
-import 'package:equatable/equatable.dart';
 import 'package:get_arch_core/get_arch_core.dart';
 
 ///
