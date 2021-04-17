@@ -2,7 +2,7 @@
 abstract class Validator<T> {
   final String errorMsg;
 
-  Validator(this.errorMsg);
+  const Validator(this.errorMsg);
 
   bool isValid(T value);
 
@@ -11,6 +11,7 @@ abstract class Validator<T> {
 }
 
 /// 联合验证器
+/// 内有状态, 因此不设const构造
 class MultiValidator extends Validator {
   final List<Validator> validators;
   String _errorMsg = '';
@@ -34,7 +35,7 @@ class MultiValidator extends Validator {
 
 /// 字符串值验证器
 abstract class StringValidator extends Validator<String> {
-  StringValidator(String errorMsg) : super(errorMsg);
+  const StringValidator(String errorMsg) : super(errorMsg);
 
   bool get ignoreEmptyValues => true;
 
@@ -49,7 +50,7 @@ abstract class StringValidator extends Validator<String> {
 
 /// 非null, 非空
 class RequiredStringValidator extends StringValidator {
-  RequiredStringValidator(String errorMsg) : super(errorMsg);
+  const RequiredStringValidator(String errorMsg) : super(errorMsg);
   @override
   final bool ignoreEmptyValues = false;
 
@@ -64,20 +65,20 @@ class LengthRangeValidator extends StringValidator {
   @override
   bool get ignoreEmptyValues => false;
 
-  LengthRangeValidator({this.min, this.max, required String errorMsg})
+  const LengthRangeValidator({this.min, this.max, required String errorMsg})
       : super(errorMsg);
 
   @override
-  bool isValid(String value) {
-    return value.length >= min! && value.length <= max!;
-  }
+  bool isValid(String value) =>
+      (min == null || min! <= value.length) &&
+      (max == null || value.length <= max!);
 }
 
 class RangeValidator extends StringValidator {
   final num? min;
   final num? max;
 
-  RangeValidator({this.min, this.max, required String errorMsg})
+  const RangeValidator({this.min, this.max, required String errorMsg})
       : assert(min != null || max != null, '值验证器两个参数不能同时为null'),
         super(errorMsg);
 
@@ -97,7 +98,7 @@ class EmailValidator extends StringValidator {
   final Pattern _emailPattern =
       r"^((([a-z]|\d|[!#\$%&'\*\+\-\/=\?\^_`{\|}~]|[\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF])+(\.([a-z]|\d|[!#\$%&'\*\+\-\/=\?\^_`{\|}~]|[\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF])+)*)|((\x22)((((\x20|\x09)*(\x0d\x0a))?(\x20|\x09)+)?(([\x01-\x08\x0b\x0c\x0e-\x1f\x7f]|\x21|[\x23-\x5b]|[\x5d-\x7e]|[\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF])|(\\([\x01-\x09\x0b\x0c\x0d-\x7f]|[\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF]))))*(((\x20|\x09)*(\x0d\x0a))?(\x20|\x09)+)?(\x22)))@((([a-z]|\d|[\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF])|(([a-z]|\d|[\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF])([a-z]|\d|-|\.|_|~|[\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF])*([a-z]|\d|[\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF])))\.)+(([a-z]|[\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF])|(([a-z]|[\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF])([a-z]|\d|-|\.|_|~|[\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF])*([a-z]|[\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF])))$";
 
-  EmailValidator({required String errorMsg}) : super(errorMsg);
+  const EmailValidator({required String errorMsg}) : super(errorMsg);
 
   @override
   bool isValid(String value) =>
@@ -108,7 +109,7 @@ class PatternValidator extends StringValidator {
   final Pattern pattern;
   final bool caseSensitive;
 
-  PatternValidator(this.pattern,
+  const PatternValidator(this.pattern,
       {required String errorMsg, this.caseSensitive = true})
       : super(errorMsg);
 
@@ -121,7 +122,8 @@ class PatternValidator extends StringValidator {
 class FuncValidator<T> extends Validator<T> {
   final bool Function(T v) validator;
 
-  FuncValidator(this.validator, {required String errorMsg}) : super(errorMsg);
+  const FuncValidator(this.validator, {required String errorMsg})
+      : super(errorMsg);
 
   @override
   bool isValid(T value) => validator(value);
