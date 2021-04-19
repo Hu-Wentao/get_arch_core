@@ -27,10 +27,16 @@ import 'dto.dart';
 /// }
 /// ```
 
-mixin IDO implements IDto {
+mixin IDo implements IDto {
+  // 默认是去除末尾2个字符('Do')
   String get tableName {
     final len = '$runtimeType'.length;
     return CaseConvertUtil.upperCamel2Snack(
         '$runtimeType'.substring(0, len - 2));
   }
+
+  // 所有key对应的value都不是null
+  // 如果某个value的值为null,则将对应的key移除
+  Map<String, dynamic> toThinJson() =>
+      this.toJson()..removeWhere((key, value) => value == null);
 }
