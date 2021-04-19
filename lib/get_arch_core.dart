@@ -14,6 +14,7 @@ export 'domain/validators.dart';
 export 'application/appliction_service.dart';
 
 export 'interface/dto.dart';
+export 'interface/do.dart';
 
 export 'profile/env_config.dart';
 export 'profile/get_arch_package.dart';
