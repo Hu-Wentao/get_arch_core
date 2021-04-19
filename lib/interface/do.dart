@@ -28,11 +28,13 @@ import 'dto.dart';
 /// ```
 
 mixin IDo implements IDto {
-  // 默认是去除末尾2个字符('Do')
+  /// 默认适配 freezed
+  /// [runtimeType]='_$_类名Do'
+  /// 因此去除前3个和后2个字符('_$_','Do')
   String get tableName {
     final len = '$runtimeType'.length;
     return CaseConvertUtil.upperCamel2Snack(
-        '$runtimeType'.substring(0, len - 2));
+        '$runtimeType'.substring(3, len - 2));
   }
 
   // 所有key对应的value都不是null
