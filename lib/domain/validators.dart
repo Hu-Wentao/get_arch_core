@@ -1,4 +1,13 @@
 /// 值验证器
+/// ```dart
+/// TextFormField(
+///   hintText: "Email",
+///   validator: Email.validator, // use `String? call(T? value)` method
+///   onChanged: (value) {
+///     email = Email(value);
+///   },
+/// ),
+/// ```
 abstract class Validator<T> {
   final String errorMsg;
 
