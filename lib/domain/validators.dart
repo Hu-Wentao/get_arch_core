@@ -7,7 +7,11 @@ abstract class Validator<T> {
   bool isValid(T value);
 
   // 本类实例可以作为表格验证器的参数
-  String? call(T value) => isValid(value) ? null : errorMsg;
+  String? call(T? value) => value == null
+      ? null
+      : isValid(value)
+          ? null
+          : errorMsg;
 }
 
 /// 联合验证器
@@ -40,8 +44,9 @@ abstract class StringValidator extends Validator<String> {
   bool get ignoreEmptyValues => true;
 
   @override
-  String? call(String value) =>
-      (ignoreEmptyValues && value.isEmpty) ? null : super.call(value);
+  String? call(String? value) => (ignoreEmptyValues && (value?.isEmpty ?? true))
+      ? null
+      : super.call(value);
 
   // 包装正则
   bool hasMatch(String pattern, String input, {bool caseSensitive: true}) =>
