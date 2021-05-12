@@ -13,6 +13,13 @@ abstract class IRepository<Ag extends IAggregate<Id>, Id extends Identity> {
   Type get entityType => Ag.runtimeType;
 }
 
+///
+/// 不使用 Identity
+abstract class IRepo<Ag extends IAgg<Id>, Id> {
+  // 返回Entity的类型
+  Type get entityType => Ag.runtimeType;
+}
+
 /// 增删改查
 /// 这不代表继承本类的Repo实现有且仅有以下方法
 abstract class ICrudRepo<E extends IAggregate<Id>, Id extends Identity>
