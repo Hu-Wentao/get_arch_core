@@ -10,3 +10,9 @@ import 'package:get_arch_core/get_arch_core.dart';
 abstract class IEntity<Id extends Identity> {
   Id get id;
 }
+
+///
+/// 无Identify
+abstract class IEtt<Id> {
+  Id get id;
+}
