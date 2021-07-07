@@ -4,30 +4,30 @@
 // Time  : 11:01
 
 import 'package:flutter_test/flutter_test.dart';
-import 'package:get_arch_core/domain/env_config.dart';
 import 'package:get_arch_core/get_arch_core.dart';
 import 'package:get_arch_core/profile/get_arch_application.dart';
-import 'package:get_arch_core/profile/i_get_arch_package.dart';
+import 'package:get_arch_core/profile/get_arch_package.dart';
 
 class _TestConfigPackage extends IGetArchPackage {
-  _TestConfigPackage(this.interfaceImplRegisterStatus, {EnvConfig pkgEnv})
+  _TestConfigPackage(this.interfaceImplRegisterStatus, {EnvConfig? pkgEnv})
       : super(pkgEnv);
 
   @override
-  Future<void> initPackage(EnvConfig config) => null;
+  Future<void>? initPackage(EnvConfig? config) => null;
 
   @override
-  Future<void> initPackageDI(EnvConfig config) => null;
+  Future<void>? initPackageDI(EnvConfig config, {EnvironmentFilter? filter}) =>
+      null;
 
   /// 这里将本参数设为 final,并通过构造函数赋值, 只是为了测试
   /// 实际项目中, 该参数绝对不允许通过构造函数赋值,而是应当在本类中定义好.
   @override
-  final Map<Type, bool> interfaceImplRegisterStatus;
+  final Map<Type, bool?>? interfaceImplRegisterStatus;
 
   ///
   /// 用于打印 非bool型配置 与 [EnvConfig]相关的配置,参见[GetArchCorePackage]
   @override
-  Map<String, String> printOtherStateWithEnvConfig(EnvConfig config) => null;
+  Map<String, String>? printOtherStateWithEnvConfig(EnvConfig? config) => null;
 }
 
 abstract class IAaaRepo {}
@@ -55,12 +55,5 @@ main() {
         packages: [
           _TestConfigPackage(null), // 不作配置, (一般将配置选择设为可选参数)
         ]);
-  });
-
-  test('_print null all conf', () {
-    GetArchApplication.run(null, packages: [
-      // 不配置环境
-      _TestConfigPackage(null),
-    ]);
   });
 }

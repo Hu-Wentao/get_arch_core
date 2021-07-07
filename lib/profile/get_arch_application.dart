@@ -3,10 +3,10 @@
 // Date  : 2020/6/17
 // Time  : 0:17
 
-import 'package:get_arch_core/domain/env_config.dart';
 import 'package:get_arch_core/get_arch_core.dart';
+import 'package:injectable/injectable.dart';
 
-import 'i_get_arch_package.dart';
+import 'get_arch_package.dart';
 
 /// App运行
 /// 在main()中,必须先执行 WidgetsFlutterBinding.ensureInitialized();
@@ -23,28 +23,41 @@ import 'i_get_arch_package.dart';
 /// [packages] 其他实现了[IGetArchPackage]的类
 /// [mockDI] 该函数提供了一个 GetIt实例参数, 用于在单元测试中注册用于调试的依赖
 class GetArchApplication {
-  static const logo = r'''
+  static logo({String? version}) => r'''\n
        _____      _                       _     
       / ____|    | |       /\            | |    
      | |  __  ___| |_     /  \   _ __ ___| |__  
      | | |_ |/ _ \ __|   / /\ \ | '__/ __| '_ \ 
      | |__| |  __/ |_   / ____ \| | | (__| | | |
-      \_____|\___|\__| /_/    \_\_|  \___|_| |_|
-
+      \_____|\___|\__| /_/    \_\_|  \___|_| |_|    $version
 ''';
   static const _endInfo = '\t═════ All the configuration are loaded ════════';
   static Future run(
     EnvConfig masterEnv, {
     bool printConfig: true,
-    @required List<IGetArchPackage> packages,
-    Future<void> Function(GetIt g) mockDI,
+    required List<IGetArchPackage>? packages,
+    Future<void> Function(GetIt g)? mockDI,
   }) async {
     try {
-      print(logo);
-      await GetArchCorePackage().init(masterEnv, printConfig);
+      print(logo());
+      final filter = NoEnvOrContains(masterEnv.envSign.inString);
+
+      // 预先注册环境标志, 防止多GetItHelper冲突
+      // 多GH冲突的原因可能就是 注册的是 <Set<String?> 可实际检测的却是<Set<String>>导致的
+      // 单GH无法发现, 目前只能用预先注册的方式通过通过检测
+      GetIt.I.registerSingleton<Set<String>>(
+        filter.environments.map<String>((e) => e ?? '').toSet(),
+        instanceName: kEnvironmentsName,
+      );
+      GetIt.I.registerSingleton<Set<String?>>(
+        filter.environments,
+        instanceName: kEnvironmentsName,
+      );
+      await GetArchCorePackage().init(masterEnv, printConfig, filter);
       await mockDI?.call(GetIt.I);
       if (packages != null)
-        for (final pkg in packages) await pkg.init(masterEnv, printConfig);
+        for (final pkg in packages)
+          await pkg.init(masterEnv, printConfig, filter);
       print(_endInfo);
     } catch (e, s) {
       print('GetArchApplication.run #### Init Error: [$e]\nStackTrace[\n$s\n]');
@@ -57,14 +70,17 @@ class GetArchCorePackage extends IGetArchPackage {
   GetArchCorePackage() : super(null);
 
   @override
-  Future<void> initPackage(EnvConfig config) => null;
+  Future<void>? initPackage(EnvConfig? config) => null;
 
   @override
-  Future<void> initPackageDI(EnvConfig config) async =>
-      GetIt.I.registerSingleton<EnvConfig>(config);
+  Future<void>? initPackageDI(EnvConfig config,
+          {EnvironmentFilter? filter}) async =>
+      GetItHelper(
+              GetIt.I, filter != null ? null : config.envSign.inString, filter)
+          .singleton<EnvConfig>(config);
 
   @override
-  Map<String, String> printOtherStateWithEnvConfig(EnvConfig config) => {
+  Map<String, String> printOtherStateWithEnvConfig(EnvConfig? config) => {
         'App Name   ': '${config?.appName}',
         'Lib Version': '${config?.libVersion}',
         'Pack Time  ': '${config?.packTime}',
@@ -72,7 +88,7 @@ class GetArchCorePackage extends IGetArchPackage {
       };
 
   @override
-  Map<Type, bool> get interfaceImplRegisterStatus => null;
+  Map<Type, bool>? get interfaceImplRegisterStatus => null;
 }
 
 // 可以通过如下代码来自动生成注册代码

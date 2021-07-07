@@ -18,9 +18,9 @@ main() {
     expect(e.leftOrNull(), UnknownFailure('test'));
   });
 
-  test('FutureEitherX', () {
-    Future<Either<Failure, Foo>> e;
-  });
+  // test('FutureEitherX', () {
+  //   Future<Either<Failure, Foo>> e;
+  // });
 }
 
 class Foo {
