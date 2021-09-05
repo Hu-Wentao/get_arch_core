@@ -32,6 +32,7 @@ class GetArchApplication {
       \_____|\___|\__| /_/    \_\_|  \___|_| |_|    $version
 ''';
   static const _endInfo = '\t═════ All the configuration are loaded ════════';
+
   static Future run(
     EnvConfig masterEnv, {
     bool printConfig: true,
@@ -46,7 +47,7 @@ class GetArchApplication {
       // 多GH冲突的原因可能就是 注册的是 <Set<String?> 可实际检测的却是<Set<String>>导致的
       // 单GH无法发现, 目前只能用预先注册的方式通过通过检测
       GetIt.I.registerSingleton<Set<String>>(
-        filter.environments.map<String>((e) => e ?? '').toSet(),
+        filter.environments.map<String>((e) => '$e').toSet(),
         instanceName: kEnvironmentsName,
       );
       GetIt.I.registerSingleton<Set<String?>>(
