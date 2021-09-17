@@ -12,8 +12,8 @@ import 'package:get_arch_core/get_arch_core.dart';
 /// [packTime] 打包发布的时间
 /// [envSign] 用于DI的注入配置,可以设为 "dev","test","prod"等
 class EnvConfig extends ValueObject {
-  final String? appName;
-  final String? libVersion;
+  final String appName;
+  final String libVersion;
   final DateTime? packTime;
   final EnvSign envSign;
 
@@ -36,8 +36,8 @@ class EnvConfig extends ValueObject {
   /// 本构造适用于单独配置某一个仅使用EnvSign的GetArchPackage,
   /// 当然, 如果你的整个项目中都没有用到其他属性,也可以在globalConfig中使用本构造
   const EnvConfig.sign(this.envSign)
-      : this.appName = null,
-        this.libVersion = null,
+      : this.appName = 'null app name',
+        this.libVersion = '0.0.0',
         this.packTime = null;
 
   @override
@@ -49,7 +49,6 @@ class EnvConfig extends ValueObject {
 enum EnvSign {
   dev,
   test,
-  staging,
   prod,
 }
 
@@ -57,7 +56,6 @@ extension EnvSignValueX on Iterable<EnvSign> {
   static const _map = {
     'dev': EnvSign.dev,
     'test': EnvSign.test,
-    'staging': EnvSign.staging,
     'prod': EnvSign.prod,
   };
 
