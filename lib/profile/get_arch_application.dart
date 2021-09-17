@@ -37,7 +37,7 @@ String getArchLogo(EnvConfig env) => '''
 
 typedef DependencyInjection = Future<GetIt> Function(
   GetIt get, {
-  EnvironmentFilter? environmentFilte,
+  EnvironmentFilter? environmentFilter,
   String? environment,
 });
 
@@ -71,7 +71,7 @@ class GetArchApplication {
       // deprecated
       await mockDI?.call(GetIt.I);
 
-      await manualInject?.call(GetIt.I, environmentFilte: filter);
+      await manualInject?.call(GetIt.I, environmentFilter: filter);
       if (packages != null)
         for (final pkg in packages)
           await pkg.init(masterEnv, printConfig, filter);
