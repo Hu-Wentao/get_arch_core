@@ -4,6 +4,7 @@
 // Time  : 0:17
 
 import 'package:get_arch_core/get_arch_core.dart';
+import 'package:get_arch_core/src/version.dart';
 import 'package:injectable/injectable.dart';
 
 import 'get_arch_package.dart';
@@ -22,15 +23,19 @@ import 'get_arch_package.dart';
 /// [printConfig] 在Flutter中建议设置该值为 !kReleaseMode
 /// [packages] 其他实现了[IGetArchPackage]的类
 /// [mockDI] 该函数提供了一个 GetIt实例参数, 用于在单元测试中注册用于调试的依赖
-class GetArchApplication {
-  static logo({String? version}) => r'''\n
+
+// 打印GetArgLogo和版本
+String getArchLogo(EnvConfig env) => '''
+
        _____      _                       _     
       / ____|    | |       /\            | |    
      | |  __  ___| |_     /  \   _ __ ___| |__  
      | | |_ |/ _ \ __|   / /\ \ | '__/ __| '_ \ 
      | |__| |  __/ |_   / ____ \| | | (__| | | |
-      \_____|\___|\__| /_/    \_\_|  \___|_| |_|    $version
+      \_____|\___|\__| /_/    \_\_|  \___|_| |_|    $packageVersion
 ''';
+
+class GetArchApplication {
   static const _endInfo = '\t═════ All the configuration are loaded ════════';
 
   static Future run(
@@ -38,9 +43,10 @@ class GetArchApplication {
     bool printConfig: true,
     required List<IGetArchPackage>? packages,
     Future<void> Function(GetIt g)? mockDI,
+    String Function(EnvConfig env) logo = getArchLogo,
   }) async {
     try {
-      print(logo());
+      print(logo(masterEnv));
       final filter = NoEnvOrContains(masterEnv.envSign.inString);
 
       // 预先注册环境标志, 防止多GetItHelper冲突
