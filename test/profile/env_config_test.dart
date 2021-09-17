@@ -5,7 +5,6 @@ main() {
   test('toString', () {
     expect(EnvSign.dev.inString, 'dev');
     expect(EnvSign.prod.inString, 'prod');
-    expect(EnvSign.staging.inString, 'staging');
     expect(EnvSign.test.inString, 'test');
   });
 }
