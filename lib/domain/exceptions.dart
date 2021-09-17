@@ -1,18 +1,25 @@
-class BaseException implements Exception {
-  final String msg;
+class BaseException {
+  final String msg; // 直接向用户展示
+  final String debugInfo; // 用于问题反馈，帮助定位BUG的信息，可以用stacktrace填充
 
-  BaseException(this.msg);
-  toString() => ("msg:$msg");
+  BaseException(this.msg, {this.debugInfo = ''});
+
+  @override
+  String toString({int maxInfoLen = 100}) =>
+      'BaseException{msg: $msg, debugInfo: ${(debugInfo.length > maxInfoLen) ? '${debugInfo.substring(0, maxInfoLen)}...' : debugInfo}}';
 }
 
+/// 值对象验证出错
 class ValidationException extends BaseException {
   ValidationException(String msg) : super(msg);
 }
 
+/// 参数错误
 class IllegalArgumentException extends BaseException {
   IllegalArgumentException(String msg) : super(msg);
 }
 
+/// 功能正在开发
 class FeatDeveloping extends BaseException {
   FeatDeveloping(String msg) : super(msg);
 }
