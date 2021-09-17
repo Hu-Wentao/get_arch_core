@@ -42,8 +42,9 @@ class GetArchApplication {
     EnvConfig masterEnv, {
     bool printConfig: true,
     required List<IGetArchPackage>? packages,
-    Future<void> Function(GetIt g)? mockDI,
+    Future<void> Function(GetIt g)? manualInject,
     String Function(EnvConfig env) logo = getArchLogo,
+    @Deprecated('use manualInject') Future<void> Function(GetIt g)? mockDI,
   }) async {
     try {
       print(logo(masterEnv));
@@ -61,7 +62,10 @@ class GetArchApplication {
         instanceName: kEnvironmentsName,
       );
       await GetArchCorePackage().init(masterEnv, printConfig, filter);
+      // deprecated
       await mockDI?.call(GetIt.I);
+
+      await manualInject?.call(GetIt.I);
       if (packages != null)
         for (final pkg in packages)
           await pkg.init(masterEnv, printConfig, filter);
