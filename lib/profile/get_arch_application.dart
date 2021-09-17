@@ -35,6 +35,12 @@ String getArchLogo(EnvConfig env) => '''
       \_____|\___|\__| /_/    \_\_|  \___|_| |_|    $packageVersion
 ''';
 
+typedef DependencyInjection = Future<GetIt> Function(
+  GetIt get, {
+  EnvironmentFilter? environmentFilte,
+  String? environment,
+});
+
 class GetArchApplication {
   static const _endInfo = '\t═════ All the configuration are loaded ════════';
 
@@ -42,7 +48,7 @@ class GetArchApplication {
     EnvConfig masterEnv, {
     bool printConfig: true,
     required List<IGetArchPackage>? packages,
-    Future<void> Function(GetIt g)? manualInject,
+    DependencyInjection? manualInject,
     String Function(EnvConfig env) logo = getArchLogo,
     @Deprecated('use manualInject') Future<void> Function(GetIt g)? mockDI,
   }) async {
@@ -65,7 +71,7 @@ class GetArchApplication {
       // deprecated
       await mockDI?.call(GetIt.I);
 
-      await manualInject?.call(GetIt.I);
+      await manualInject?.call(GetIt.I, environmentFilte: filter);
       if (packages != null)
         for (final pkg in packages)
           await pkg.init(masterEnv, printConfig, filter);
