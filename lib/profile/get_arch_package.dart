@@ -36,16 +36,17 @@ abstract class IGetArchPackage {
 
   // 起止行4个空格,信息内容行6个空格
   void _printConf(EnvConfig config) {
-    final start = '\n\t╠╬══╝ [${this.runtimeType}] Config Profile ╚══════\n';
-    final endLn = '\t╚╚═══ [${this.runtimeType}] Config  Loaded ═══════\n';
+    final start =
+        '\n╠╬══╝ Package Config Start ╚══════════════════════\n╠╣    [[${this.runtimeType}]]';
+    final endLn = '╚╚═══ Package Config Loaded   ════════════════════\n';
     StringBuffer? bf = interfaceImplRegisterStatus?.entries.fold<StringBuffer>(
         StringBuffer(),
         (pre, kv) => pre
           ..writeln(
-              '\t  <${kv.key}>Implement: ${kv.value == null ? "ERROR! Please check package's EnvConfig !" : kv.value! ? 'ON' : 'OFF'}'));
+              '  <${kv.key}>Implement: ${kv.value == null ? "ERROR! Please check package's EnvConfig !" : kv.value! ? 'ON' : 'OFF'}'));
     bf = printOtherStateWithEnvConfig(config)?.entries.fold<StringBuffer?>(
             bf ?? StringBuffer(),
-            (pre, kv) => pre?..writeln('\t  ${kv.key} : ${kv.value}')) ??
+            (pre, kv) => pre?..writeln('  ${kv.key} : ${kv.value}')) ??
         bf;
 
     print(start);

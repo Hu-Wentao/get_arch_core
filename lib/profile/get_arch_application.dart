@@ -25,15 +25,15 @@ import 'get_arch_package.dart';
 /// [mockDI] 该函数提供了一个 GetIt实例参数, 用于在单元测试中注册用于调试的依赖
 
 // 打印GetArgLogo和版本
-String getArchLogo(EnvConfig env) => '''
-
-       _____      _                       _     
-      / ____|    | |       /\            | |    
-     | |  __  ___| |_     /  \   _ __ ___| |__  
-     | | |_ |/ _ \ __|   / /\ \ | '__/ __| '_ \ 
-     | |__| |  __/ |_   / ____ \| | | (__| | | |
-      \_____|\___|\__| /_/    \_\_|  \___|_| |_|    $packageVersion
-''';
+String getArchLogo(EnvConfig env) =>
+    r'''
+  _____      _                       _     
+ / ____|    | |       /\            | |    
+| |  __  ___| |_     /  \   _ __ ___| |__  
+| | |_ |/ _ \ __|   / /\ \ | '__/ __| '_ \ 
+| |__| |  __/ |_   / ____ \| | | (__| | | |
+ \_____|\___|\__| /_/    \_\_|  \___|_| |_|  ''' +
+    'v$packageVersion';
 
 typedef DependencyInjection = Future<GetIt> Function(
   GetIt get, {
@@ -42,7 +42,7 @@ typedef DependencyInjection = Future<GetIt> Function(
 });
 
 class GetArchApplication {
-  static const _endInfo = '\t═════ All the configuration are loaded ════════';
+  static const _endInfo = '╠╬═══ All configurations have been loaded ════════\n';
 
   static Future run(
     EnvConfig masterEnv, {
