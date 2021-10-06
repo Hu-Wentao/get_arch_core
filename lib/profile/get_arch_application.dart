@@ -79,12 +79,8 @@ class GetArchApplication {
           await pkg.init(masterEnv, printConfig, filter);
       print(_endInfo);
     } catch (e, s) {
-      if (onInitError != null) {
-        onInitError(e, s);
-      } else {
-        print(
-            'GetArchApplication.run #### Init Error: [$e]\nStackTrace[\n$s\n]');
-      }
+      onInitError?.call(e, s);
+      print('GetArchApplication.run #### Init Error: [$e]\nStackTrace[\n$s\n]');
     }
   }
 }
