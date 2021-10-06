@@ -51,6 +51,7 @@ class GetArchApplication {
     required List<IGetArchPackage>? packages,
     DependencyInjection? manualInject,
     String Function(EnvConfig env) logo = getArchLogo,
+    void Function(Object e, StackTrace s)? onInitError,
     @Deprecated('use manualInject') Future<void> Function(GetIt g)? mockDI,
   }) async {
     try {
@@ -78,7 +79,12 @@ class GetArchApplication {
           await pkg.init(masterEnv, printConfig, filter);
       print(_endInfo);
     } catch (e, s) {
-      print('GetArchApplication.run #### Init Error: [$e]\nStackTrace[\n$s\n]');
+      if (onInitError != null) {
+        onInitError(e, s);
+      } else {
+        print(
+            'GetArchApplication.run #### Init Error: [$e]\nStackTrace[\n$s\n]');
+      }
     }
   }
 }
