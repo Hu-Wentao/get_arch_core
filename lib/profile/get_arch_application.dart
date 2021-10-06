@@ -4,7 +4,7 @@
 // Time  : 0:17
 
 import 'package:get_arch_core/get_arch_core.dart';
-import 'package:get_arch_core/src/version.dart';
+import 'package:get_arch_core/src/constants/pubspec.yaml.g.dart';
 import 'package:injectable/injectable.dart';
 
 import 'get_arch_package.dart';
@@ -33,7 +33,7 @@ String getArchLogo(EnvConfig env) =>
 | | |_ |/ _ \ __|   / /\ \ | '__/ __| '_ \ 
 | |__| |  __/ |_   / ____ \| | | (__| | | |
  \_____|\___|\__| /_/    \_\_|  \___|_| |_|  ''' +
-    'v$packageVersion';
+    'v$version';
 
 typedef DependencyInjection = Future<GetIt> Function(
   GetIt get, {
@@ -42,7 +42,8 @@ typedef DependencyInjection = Future<GetIt> Function(
 });
 
 class GetArchApplication {
-  static const _endInfo = '╠╬═══ All configurations have been loaded ════════\n';
+  static const _endInfo =
+      '╠╬═══ All configurations have been loaded ════════\n';
 
   static Future run(
     EnvConfig masterEnv, {
@@ -98,6 +99,8 @@ class GetArchCorePackage extends IGetArchPackage {
 
   @override
   Map<String, String> printOtherStateWithEnvConfig(EnvConfig? config) => {
+        'Framework Version   ':
+            '$version at ${DateTime.fromMillisecondsSinceEpoch(timestamp * 1000).toString().split(' ').first}',
         'App Name   ': '${config?.appName}',
         'Lib Version': '${config?.libVersion}',
         'Pack Time  ': '${config?.packTime}',

@@ -1,0 +1,12 @@
+targets:
+  $default:
+    # Read about `build.yaml` at https://pub.dev/packages/build_config
+    sources:
+      - $package$
+      - lib/**
+      - pubspec.yaml
+    builders:
+      # pubspec_generator
+      pubspec_generator:
+        options:
+          output: lib/src/profile/pubspec.yaml.g.dart
