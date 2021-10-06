@@ -101,12 +101,12 @@ class GetArchCorePackage extends IGetArchPackage {
 
   @override
   Map<String, String> printOtherStateWithEnvConfig(EnvConfig? config) => {
-        'Framework Version   ':
+        'Frame Version':
             '$version at ${DateTime.fromMillisecondsSinceEpoch(timestamp * 1000).toString().split(' ').first}',
-        'App Name   ': '${config?.appName}',
-        'Lib Version': '${config?.libVersion}',
-        'Pack Time  ': '${config?.packTime}',
-        'Runtime Env': '${config?.envSign}',
+        'App      Name': '${config?.appName}',
+        'Lib   Version': '${config?.libVersion}',
+        'Build    Time': '${config?.packTime}',
+        'Runtime   Env': '${config?.envSign}',
       };
 
   @override
