@@ -61,5 +61,5 @@ extension EnvSignValueX on Iterable<EnvSign> {
 }
 
 extension EnvSignX on EnvSign {
-  String get inString => toString().split('.').last;
+  String get inString => name;
 }
