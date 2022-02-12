@@ -2,6 +2,11 @@
 
 GetArch core package
 
+
+## New Repo Address
+
+**https://github.com/GetArch/get_arch_core**
+
 ## Getting Started
 
 ```dart
