@@ -3,9 +3,10 @@
 GetArch core package
 
 
-## New Repo Address
+## New Repo Address 代码已迁移至新地址
 
-**https://github.com/GetArch/get_arch_core**
+[**https://github.com/GetArch/get_arch_core**](https://github.com/GetArch/get_arch_core**)
+
 
 ## Getting Started
 
